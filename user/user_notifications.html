@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - iProject</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --accent-pink: #f472b6;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --bg-soft: #f8fafc;
+            --border-color: #e2e8f0;
+            --warning-light: #fff7ed;
+            --warning-dark: #9a3412;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif; background-color: var(--bg-soft); color: var(--text-dark); }
+
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 80px; background: white; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 24px; font-weight: 800; color: var(--text-dark); text-decoration: none; }
+
+        .container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+
+        .page-header { margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
+        .page-header h1 { font-size: 28px; font-weight: 800; }
+
+        /* Notification Item */
+        .noti-card {
+            background: white; border-radius: 20px; padding: 25px; border: 1px solid var(--border-color);
+            margin-bottom: 20px; transition: 0.3s; position: relative; overflow: hidden;
+            display: flex; gap: 20px;
+        }
+        .noti-card.unread { border-left: 6px solid var(--accent-pink); background: #fffbff; }
+        .noti-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+
+        .noti-icon {
+            width: 50px; height: 50px; border-radius: 15px; display: flex; align-items: center; 
+            justify-content: center; font-size: 20px; flex-shrink: 0;
+        }
+        .icon-revision { background: var(--warning-light); color: var(--warning-dark); }
+
+        .noti-content { flex: 1; }
+        .noti-content h3 { font-size: 16px; font-weight: 800; margin-bottom: 5px; color: var(--text-dark); }
+        .noti-content p { font-size: 14px; color: var(--text-gray); margin-bottom: 15px; line-height: 1.5; }
+
+        /* เฉพาะจุดที่ต้องแก้ไข */
+        .revision-points {
+            display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px;
+        }
+        .point-tag {
+            background: #f1f5f9; color: #475569; padding: 4px 12px; border-radius: 50px;
+            font-size: 12px; font-weight: 700; border: 1px solid var(--border-color);
+        }
+
+        .feedback-box {
+            background: #f8fafc; padding: 15px; border-radius: 12px; border-left: 4px solid var(--border-color);
+            font-size: 13px; color: #334155; font-style: italic; margin-bottom: 15px;
+        }
+
+        .btn-fix {
+            display: inline-flex; align-items: center; gap: 8px; background: var(--text-dark);
+            color: white; padding: 10px 20px; border-radius: 50px; text-decoration: none;
+            font-size: 13px; font-weight: 700; transition: 0.3s;
+        }
+        .btn-fix:hover { background: var(--primary-blue); }
+        .user-dropdown a:hover {
+            background-color: #f8fafc;
+            color: var(--primary-blue) !important;
+        }
+
+        .user-dropdown button:hover {
+            border-color: var(--primary-blue);
+            background: white;
+        }
+
+        .time-stamp { font-size: 11px; color: var(--text-gray); margin-top: 10px; display: block; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/user/home.html" class="logo">iProject</a>
+         <div style="display:flex; align-items:center; gap:30px;">
+
+            <!-- User Dropdown -->
+            <div class="user-dropdown" style="position: relative; display: inline-block;">
+                <button onclick="toggleDropdown()"
+                    style="display: flex; align-items: center; gap: 12px; background: #f8fafc; border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 50px; cursor: pointer; transition: 0.3s;">
+                    <div
+                        style="width: 32px; height: 32px; background: var(--primary-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800;">
+                        TV
+                    </div>
+                    <div style="text-align: left;">
+                        <p style="font-size: 13px; font-weight: 700; color: var(--text-dark); margin: 0;">นายวีรยุทธ รักชาติ</p>
+                        <p style="font-size: 11px; color: var(--text-gray); margin: 0;">User Account</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-down" style="font-size: 12px; color: var(--text-gray);"></i>
+                </button>
+
+                <!-- Dropdown Menu Content -->
+                <div id="userMenu"
+                    style="display: none; position: absolute; right: 0; top: 50px; background: white; min-width: 200px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1000; padding: 8px 0; overflow: hidden;">
+                    <a href="#"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-user-gear" style="color: var(--text-gray);"></i> Profile Settings
+                    </a>
+                    <a href="/user/user_notifications.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-bell" style="color: var(--text-gray);"></i> Notifications
+                    </a>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 8px 0;">
+                    <a href="/login/login.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--danger); font-size: 14px; font-weight: 700; transition: 0.2s;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>การแจ้งเตือน</h1>
+            <button style="background:none; border:none; color:var(--primary-blue); font-weight:700; cursor:pointer; font-size:14px;">ทำเป็นอ่านแล้วทั้งหมด</button>
+        </div>
+
+        <!-- รายการแจ้งเตือน: ส่งกลับแก้ไขเฉพาะจุด -->
+        <div class="noti-card unread">
+            <div class="noti-icon icon-revision">
+                <i class="fa-solid fa-pen-ruler"></i>
+            </div>
+            <div class="noti-content">
+                <h3>สปอนเซอร์ส่งโครงการกลับมาให้คุณแก้ไข</h3>
+                <p>โครงการ <b>Smart Agriculture IoT System</b> ของคุณต้องได้รับการปรับปรุงในบางหัวข้อก่อนรับการอนุมัติ</p>
+                
+                <div style="font-size: 12px; font-weight: 700; color: var(--warning-dark); margin-bottom: 8px; text-transform: uppercase;">หัวข้อที่ต้องแก้ไข:</div>
+                <div class="revision-points">
+                    <span class="point-tag">กิจกรรม/งวดงาน</span>
+                    <span class="point-tag">งบประมาณ</span>
+                    <span class="point-tag">ตัวชี้วัด/ผลที่ได้รับ</span>
+                </div>
+
+                <div class="feedback-box">
+                    "งวดงานที่ 2 รบกวนเพิ่มรายละเอียดการติดตั้งระบบและแนบใบเสร็จค่าโดเมนเพิ่มครับ รวมถึงงบประมาณในงวดที่ 3 ดูสูงไปหน่อย รบกวนตรวจสอบอีกครั้ง"
+                </div>
+
+                <a href="/user/user_edit_project.html" class="btn-fix">
+                    <i class="fa-solid fa-wrench"></i> ไปที่หน้าแก้ไขโครงการ
+                </a>
+                
+                <span class="time-stamp">เมื่อ 10 นาทีที่แล้ว</span>
+            </div>
+        </div>
+
+        <!-- รายการแจ้งเตือนอื่นๆ -->
+        <div class="noti-card">
+            <div class="noti-icon" style="background: #ecfdf5; color: #059669;">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div class="noti-content">
+                <h3>ยินดีด้วย! งวดงานที่ 1 ได้รับการอนุมัติ</h3>
+                <p>โครงการ <b>I-Corp System Dev</b> ได้รับการโอนเงินงวดที่ 1 จำนวน ฿ 75,000 เรียบร้อยแล้ว</p>
+                <span class="time-stamp">เมื่อวานนี้ 14:20 น.</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleDropdown() {
+            const menu = document.getElementById('userMenu');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
+
+        // ปิด Dropdown เมื่อคลิกข้างนอก
+        window.onclick = function (event) {
+            if (!event.target.closest('.user-dropdown')) {
+                const dropdowns = document.getElementById("userMenu");
+                if (dropdowns) dropdowns.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+</html>

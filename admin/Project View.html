@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project View - iProject</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --accent-pink: #f472b6;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --bg-soft: #f8fafc;
+            --border-color: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif; background-color: var(--bg-soft); color: var(--text-dark); }
+
+        /* Navigation */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 80px; background-color: white; border-bottom: 1px solid var(--border-color);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .logo { font-size: 24px; font-weight: 800; color: var(--text-dark); text-decoration: none; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 14px; }
+        .nav-links a:hover {color: var(--primary-blue);}
+
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+
+        /* Lifecycle Stepper (Compact) */
+        .stepper-card { background: white; border-radius: 20px; padding: 25px; border: 1px solid var(--border-color); grid-column: span 2; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .step-item { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; }
+        .step-dot { width: 12px; height: 12px; border-radius: 50%; background: #e2e8f0; margin-bottom: 10px; z-index: 2; border: 3px solid white; box-shadow: 0 0 0 2px #e2e8f0; }
+        .step-item.active .step-dot { background: var(--primary-blue); box-shadow: 0 0 0 2px var(--primary-blue); }
+        .step-item.active .step-label { color: var(--primary-blue); font-weight: 700; }
+        .step-label { font-size: 11px; font-weight: 600; color: var(--text-gray); text-transform: uppercase; }
+        .step-item::after { content: ''; position: absolute; top: 5px; left: 50%; width: 100%; height: 2px; background: #e2e8f0; z-index: 1; }
+        .step-item:last-child::after { display: none; }
+
+        /* Content Blocks */
+        .card { background: white; border-radius: 24px; padding: 35px; border: 1px solid var(--border-color); margin-bottom: 30px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
+        .section-title { font-size: 18px; font-weight: 800; margin-bottom: 20px; color: var(--primary-blue); display: flex; align-items: center; gap: 10px; }
+        .section-title span { background: var(--accent-pink); width: 4px; height: 20px; border-radius: 10px; }
+
+        /* Left Column Info */
+        .project-title { font-size: 32px; font-weight: 800; margin-bottom: 15px; letter-spacing: -1px; }
+        .meta-tags { display: flex; gap: 10px; margin-bottom: 25px; }
+        .tag { background: #f1f5f9; padding: 6px 14px; border-radius: 50px; font-size: 12px; font-weight: 600; color: #475569; }
+
+        .desc-text { font-size: 15px; line-height: 1.8; color: var(--text-gray); margin-bottom: 20px; }
+        
+        /* Table / List Styles */
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th { text-align: left; padding: 12px; font-size: 12px; color: var(--text-gray); border-bottom: 1px solid var(--border-color); text-transform: uppercase; }
+        .data-table td { padding: 15px 12px; border-bottom: 1px solid #f8fafc; font-size: 14px; }
+        .task-check { color: var(--success); font-size: 18px; }
+
+        /* Sidebar Widgets */
+        .widget-title { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-gray); margin-bottom: 20px; display: block; }
+        .progress-circle-box { text-align: center; margin-bottom: 30px; }
+        .big-progress { font-size: 48px; font-weight: 800; color: var(--primary-blue); letter-spacing: -2px; }
+        
+        .member-list { display: flex; flex-direction: column; gap: 15px; }
+        .member-item { display: flex; align-items: center; gap: 12px; }
+        .member-avatar { width: 40px; height: 40px; border-radius: 12px; background: #eef2ff; display: flex; align-items: center; justify-content: center; color: var(--primary-blue); font-weight: 700; font-size: 14px; }
+        .member-info b { font-size: 14px; display: block; }
+        .member-info span { font-size: 12px; color: var(--text-gray); }
+
+        .budget-total-card { background: #f1f5f9; color: var(--text-dark); border-radius: 20px; padding: 25px; text-align: center; }
+        .budget-total-card span { font-size: 12px; opacity: 0.7; font-weight: 600; }
+        .budget-amount { font-size: 32px; font-weight: 800; display: block; color: var(--accent-pink); margin-top: 5px; }
+
+        /* Action Buttons */
+        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-action { flex: 1; padding: 12px; border-radius: 12px; border: 1px solid var(--border-color); background: white; font-weight: 700; font-size: 13px; cursor: pointer; transition: 0.3s; }
+        .btn-action:hover { background: #f8fafc; }
+        .btn-approve { background: var(--primary-blue); color: white; border: none; }
+        .btn-approve:hover { background: #1e3a8a; }
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-gray);
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        @media (max-width: 1024px) { .container { grid-template-columns: 1fr; } .stepper-card { display: none; } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/user/home.html" class="logo">iProject</a>
+        <div class="nav-links">
+            <a href="/user/my_projects.html">My Projects</a>
+            <a href="#">User/Sponser/Admin</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="stepper-card">
+            <div class="step-item active"><div class="step-dot"></div><div class="step-label">Initiation</div></div>
+            <div class="step-item active"><div class="step-dot"></div><div class="step-label">Planning</div></div>
+            <div class="step-item active"><div class="step-dot"></div><div class="step-label">Execution</div></div>
+            <div class="step-item"><div class="step-dot"></div><div class="step-label">Closing</div></div>
+        </div>
+
+        <main>
+            <div class="card">
+                <div class="meta-tags">
+                    <span class="tag"><i class="fa-solid fa-calendar"></i> May 2026 - Dec 2026</span>
+                    <span class="tag"><i class="fa-solid fa-location-dot"></i> Khok Muang, Thailand</span>
+                </div>
+                <h1 class="project-title">I-Corp System Development</h1>
+                <p class="desc-text"><b>หลักการและเหตุผล:</b> โครงการพัฒนาระบบบริหารจัดการโครงการอัจฉริยะเพื่อเพิ่มความโปร่งใสในองค์กรและลดขั้นตอนการทำงานที่ซ้ำซ้อน โดยเน้นการวัดผลความสำเร็จเป็นเปอร์เซ็นต์แบบเรียลไทม์...</p>
+                <p class="desc-text"><b>วัตถุประสงค์:</b> เพื่อสร้างระบบศูนย์กลางในการบริหารโครงการ (12 หัวข้อ) และติดตามสถานะงบประมาณรายงวดได้อย่างแม่นยำ</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px; background: #f8fafc; border-radius: 15px; font-size: 14px;">
+                    <div><b>กลุ่มเป้าหมาย:</b> นักศึกษาและบุคลากร (100 คน)</div>
+                    <div><b>การประเมินผล:</b> แบบสอบถาม & ระบบ Audit Log</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="section-title"><span></span>5. แผนการดำเนินงาน (Task Execution)</h2>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th width="10%">สถานะ</th>
+                            <th width="70%">กิจกรรม</th>
+                            <th width="20%">น้ำหนัก</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="task-check"><i class="fa-solid fa-circle-check"></i></td>
+                            <td>ประชุมวางแผนและกำหนดโครงสร้างฐานข้อมูล</td>
+                            <td>20.00%</td>
+                        </tr>
+                        <tr>
+                            <td class="task-check"><i class="fa-solid fa-circle-check"></i></td>
+                            <td>พัฒนา Frontend ตาม UI ที่ออกแบบไว้ (V1-V5)</td>
+                            <td>30.00%</td>
+                        </tr>
+                        <tr>
+                            <td style="color:#cbd5e1"><i class="fa-solid fa-circle-dot"></i></td>
+                            <td>เชื่อมต่อ Backend และระบบคำนวณงบประมาณ</td>
+                            <td>40.00%</td>
+                        </tr>
+                        <tr>
+                            <td style="color:#cbd5e1"><i class="fa-solid fa-circle-dot"></i></td>
+                            <td>สรุปผลและจัดทำรายงาน Closing</td>
+                            <td>10.00%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2 class="section-title"><span></span>8. รายละเอียดงบประมาณ (Financials)</h2>
+                <div style="margin-bottom: 25px; border-left: 3px solid #e2e8f0; padding-left: 20px;">
+                    <b style="font-size: 14px; color: var(--text-gray);">งวดที่ 1: ขั้นตอนเตรียมความพร้อม</b>
+                    <table class="data-table" style="margin-top: 10px;">
+                        <tbody>
+                            <tr><td>ค่าตอบแทนวิทยากรผู้เชี่ยวชาญ</td><td>ค่าตอบแทน</td><td>฿ 15,000.00</td></tr>
+                            <tr><td>ค่าจัดเลี้ยงอาหารกลางวัน (50 คน)</td><td>ค่าใช้สอย</td><td>฿ 7,500.00</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="border-left: 3px solid #e2e8f0; padding-left: 20px;">
+                    <b style="font-size: 14px; color: var(--text-gray);">งวดที่ 2: ขั้นตอนพัฒนาและติดตั้ง</b>
+                    <p style="font-size: 13px; color: #cbd5e1; margin-top: 10px;">(ยังไม่มีการเบิกจ่าย / รออนุมัติจาก Sponsor)</p>
+                </div>
+            </div>
+        </main>
+
+        <aside>
+            <div class="card" style="text-align: center;">
+                <span class="widget-title">Overall Progress</span>
+                <div class="progress-circle-box">
+                    <span class="big-progress">50%</span>
+                    <p style="font-size: 12px; font-weight: 700; color: var(--success); text-transform: uppercase;">On Track</p>
+                </div>
+                <div style="background: #f1f5f9; border-radius: 10px; height: 6px; width: 100%; overflow: hidden;">
+                    <div style="background: var(--primary-blue); height: 100%; width: 50%;"></div>
+                </div>
+            </div>
+
+            <div class="budget-total-card">
+                <span>Total Approved Budget</span>
+                <span class="budget-amount">฿ 225,000.00</span>
+                <div style="margin-top: 15px; font-size: 11px; opacity: 0.6;">* คำนวณจากยอดรวมทุกงวดงาน</div>
+            </div>
+
+            <div class="card" style="margin-top: 30px;">
+                <span class="widget-title">Project Team</span>
+                <div class="member-list">
+                    <div class="member-item">
+                        <div class="member-avatar">YR</div>
+                        <div class="member-info"><b>นายวีรยุทธ รักชาติ</b><span>Project Manager</span></div>
+                    </div>
+                    <div class="member-item">
+                        <div class="member-avatar" style="background:#fae8ff; color:#a21caf;">SP</div>
+                        <div class="member-info"><b>สมชาย สปอนเซอร์</b><span>Sponsor (Financial)</span></div>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn-action">Request Edit Project</button>
+                    <button class="btn-action btn-approve">Report</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="widget-title">Expected Benefits</span>
+                <p style="font-size: 14px; color: var(--text-gray);">องค์กรมีระบบจัดการที่โปร่งใส 100% และลดเวลาในการประมวลผลเอกสารโครงการได้กว่า 50%</p>
+            </div>
+        </aside>
+    </div>
+
+    <footer>
+        &copy; 2026 iProject Management System. Your Vision, Our Reality.
+    </footer>
+
+</body>
+</html>

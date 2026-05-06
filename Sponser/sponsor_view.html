@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsor Project View - iProject</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --accent-pink: #f472b6;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --bg-soft: #f8fafc;
+            --border-color: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif;
+            background-color: var(--bg-soft);
+            color: var(--text-dark);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 80px;
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .sponsor-status-banner {
+            grid-column: span 2;
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 8px solid var(--primary-blue);
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 35px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title span {
+            background: var(--accent-pink);
+            width: 4px;
+            height: 20px;
+            border-radius: 10px;
+        }
+
+        .finance-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .finance-table th {
+            text-align: left;
+            padding: 12px;
+            font-size: 12px;
+            color: var(--text-gray);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .finance-table td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #f8fafc;
+            font-size: 14px;
+        }
+
+        .btn-pay-now {
+            background: var(--text-dark);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-pay-now:hover {
+            background: var(--primary-blue);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-blue);
+            width: 75%;
+        }
+
+        .badge-status {
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .badge-paid {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-pending {
+            background: #fff7ed;
+            color: #9a3412;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-card {
+            background: white;
+            border-radius: 28px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sponsor-status-banner {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+
+        .user-dropdown a:hover {
+            background-color: #f8fafc;
+            color: var(--primary-blue) !important;
+        }
+
+        .user-dropdown button:hover {
+            border-color: var(--primary-blue);
+            background: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="/Sponser/home.html" class="logo">iProject</a>
+
+        <div  style="display:flex; align-items:center; gap:20px;">
+            <!-- เมนูหลัก -->
+            <div style="display:flex; gap:20px;">
+                <a href="/Sponser/sponsor_dashboard.html"
+                    style="font-size:14px; font-weight:600; text-decoration: none; color: var(--text-dark);">Dashboard</a>
+            </div>
+
+            <!-- User Dropdown -->
+            <div class="user-dropdown" style="position: relative; display: inline-block;">
+                <button onclick="toggleDropdown()"
+                    style="display: flex; align-items: center; gap: 12px; background: #f8fafc; border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 50px; cursor: pointer; transition: 0.3s;">
+                    <div
+                        style="width: 32px; height: 32px; background: var(--primary-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800;">
+                        TV
+                    </div>
+                    <div style="text-align: left;">
+                        <p style="font-size: 13px; font-weight: 700; color: var(--text-dark); margin: 0;">TechVision
+                            Sponsor</p>
+                        <p style="font-size: 11px; color: var(--text-gray); margin: 0;">Sponsor Account</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-down" style="font-size: 12px; color: var(--text-gray);"></i>
+                </button>
+
+                <!-- Dropdown Menu Content -->
+                <div id="userMenu"
+                    style="display: none; position: absolute; right: 0; top: 50px; background: white; min-width: 200px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1000; padding: 8px 0; overflow: hidden;">
+                    <a href="#"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-user-gear" style="color: var(--text-gray);"></i> Profile Settings
+                    </a>
+                    <a href="/Sponser/sponsor_notifications.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-bell" style="color: var(--text-gray);"></i> Notifications
+                    </a>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 8px 0;">
+                    <a href="/login/login.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--danger); font-size: 14px; font-weight: 700; transition: 0.2s;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- แถบแจ้งสถานะโครงการสำหรับสปอนเซอร์ -->
+        <div class="sponsor-status-banner">
+            <div>
+                <p style="font-size: 12px; color: var(--text-gray); font-weight: 700; text-transform: uppercase;">
+                    Current Phase</p>
+                <h2 style="font-size: 24px; font-weight: 800;">Execution Stage (งวดที่ 2)</h2>
+            </div>
+            <div style="text-align: right;">
+                <p style="font-size: 12px; color: var(--text-gray); font-weight: 700; text-transform: uppercase;">Total
+                    Investment</p>
+                <h2 style="font-size: 24px; font-weight: 800; color: var(--primary-blue);">฿ 225,000.00</h2>
+            </div>
+        </div>
+
+        <main>
+            <div class="card">
+                <h1 style="font-size: 28px; font-weight: 800; margin-bottom: 10px;">I-Corp System Development</h1>
+                <p style="color: var(--text-gray); font-size: 14px; line-height: 1.6;">
+                    โครงการพัฒนาระบบหลังบ้านเพื่อจัดการงบประมาณอย่างโปร่งใส โดยเน้นการบันทึก Audit Log
+                    ทุกธุรกรรมการเงินเพื่อป้องกันการทุจริต</p>
+
+                <div style="margin-top: 25px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 15px;">
+                        <span style="font-size: 12px; font-weight: 700; color: var(--text-gray);">PROJECT OWNER</span>
+                        <p style="font-weight: 700;">นายวีรยุทธ รักชาติ</p>
+                    </div>
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 15px;">
+                        <span style="font-size: 12px; font-weight: 700; color: var(--text-gray);">ESTIMATED
+                            COMPLETION</span>
+                        <p style="font-weight: 700;">31 ธันวาคม 2026</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ส่วนการตรวจสอบงบประมาณรายงวด -->
+            <div class="card">
+                <h2 class="section-title"><span></span>Financial Installments (แผนการเบิกจ่าย)</h2>
+                <table class="finance-table">
+                    <thead>
+                        <tr>
+                            <th>งวดงาน</th>
+                            <th>จำนวนเงิน</th>
+                            <th>สถานะการโอน</th>
+                            <th>ดำเนินการ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>งวดที่ 1:</b> วางระบบฐานข้อมูล</td>
+                            <td>฿ 75,000.00</td>
+                            <td><span class="badge-status badge-paid"><i class="fa-solid fa-check"></i> จ่ายแล้ว</span>
+                            </td>
+                            <td style="font-size: 12px; color: var(--text-gray);">15 มี.ค. 2026</td>
+                        </tr>
+                        <tr>
+                            <td><b>งวดที่ 2:</b> พัฒนา Frontend</td>
+                            <td>฿ 50,000.00</td>
+                            <td><span class="badge-status badge-pending">รอการเบิกจ่าย</span></td>
+                            <td><button class="btn-pay-now"
+                                    onclick="openPaymentModal('I-Corp System Dev', 'งวดที่ 2', '50,000.00')">
+                                    Confirm Payment
+                                </button>
+                        </tr>
+                        <tr>
+                            <td><b>งวดที่ 3:</b> เชื่อมต่อ Backend</td>
+                            <td>฿ 100,000.00</td>
+                            <td><span style="color: #cbd5e1;">ยังไม่ถึงกำหนด</span></td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ความคืบหน้ากิจกรรม (Audit Trail) -->
+            <div class="card">
+                <h2 class="section-title"><span></span>Execution Progress (ความคืบหน้าจริง)</h2>
+                <div style="margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; font-weight: 700;">
+                        <span>Progress Score</span>
+                        <span style="color: var(--primary-blue);">75%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div style="display: flex; gap: 10px; font-size: 14px;">
+                        <i class="fa-solid fa-circle-check" style="color: var(--success); margin-top: 3px;"></i>
+                        <div>
+                            <b>Setup Server & Database</b><br>
+                            <span style="font-size: 12px; color: var(--text-gray);">เสร็จสิ้นเมื่อ 10 เม.ย. 2026 |
+                                พร้อมหลักฐานรูปภาพ</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 10px; font-size: 14px;">
+                        <i class="fa-solid fa-circle-check" style="color: var(--success); margin-top: 3px;"></i>
+                        <div>
+                            <b>UI/UX Design (V1-V5)</b><br>
+                            <span style="font-size: 12px; color: var(--text-gray);">เสร็จสิ้นเมื่อ 25 เม.ย. 2026 |
+                                พร้อมหลักฐานไฟล์ PDF</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <aside>
+            <div class="card" style="border: 2px solid var(--primary-blue);">
+                <span
+                    style="font-size: 12px; font-weight: 800; color: var(--primary-blue); text-transform: uppercase;">Sponsor
+                    Decision</span>
+                <h3 style="margin: 10px 0; font-size: 18px;">อนุมัติการทำงานงวดถัดไป?</h3>
+                <p style="font-size: 13px; color: var(--text-gray); margin-bottom: 20px;">ท่านควรตรวจสอบความคืบหน้า 75%
+                    และหลักฐานที่แนบมาก่อนตัดสินใจโอนเงินงวดที่ 2</p>
+
+                <button class="btn-pay-now" style="width: 100%; padding: 15px; margin-bottom: 10px;"
+                    onclick="openPaymentModal('I-Corp System Dev', 'งวดที่ 2', '50,000.00')">อนุมัติและระบุยอดโอนเงิน</button>
+                <button onclick="openDetailedRequest()"
+                    style="width: 100%; padding: 15px; border-radius: 50px; border: 1px solid var(--warning); background: white; color: var(--warning); font-weight: 700; cursor: pointer;">ขอข้อมูลเพิ่มเติม
+                    (Request Data)</button>
+            </div>
+            <div class="card">
+                <h3
+                    style="font-size: 14px; font-weight: 800; color: var(--text-gray); text-transform: uppercase; margin-bottom: 15px;">
+                    Project Documents</h3>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <a href="#"
+                        style="text-decoration: none; color: var(--text-dark); font-size: 14px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> Proposal_Full_V2.pdf
+                    </a>
+                    <a href="#"
+                        style="text-decoration: none; color: var(--text-dark); font-size: 14px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fa-solid fa-image" style="color: var(--primary-blue);"></i> Database_Structure.png
+                    </a>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal-overlay">
+        <div class="modal-card" id="paymentContent" style="width: 90%; max-width: 500px; text-align: center;">
+            <!-- เนื้อหาถูกใส่ผ่าน JS -->
+        </div>
+    </div>
+
+    <!-- Request Data (Revision) Modal -->
+    <div id="detailedRequestModal" class="modal-overlay">
+        <div class="modal-card" style="width: 95%; max-width: 650px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                <div>
+                    <h2 style="font-size: 22px; font-weight: 800;">✍️ รายละเอียดการขอข้อมูล/แก้ไข</h2>
+                    <p style="font-size: 14px; color: var(--text-gray);">
+                        เลือกส่วนที่ต้องการให้เจ้าของโครงการปรับปรุงหรือชี้แจงเพิ่มเติม</p>
+                </div>
+                <button onclick="closeDetailedRequest()"
+                    style="background:none; border:none; font-size:28px; cursor:pointer; color:var(--text-gray);">&times;</button>
+            </div>
+
+            <form id="detailedRequestForm">
+                <div style="margin-bottom: 25px;">
+                    <label
+                        style="display: block; font-weight: 700; font-size: 14px; margin-bottom: 12px; color: var(--primary-blue);">1.
+                        หัวข้อที่ต้องการให้แก้ไข (เลือกได้มากกว่า 1)</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <label
+                            style="display:flex; align-items:center; gap:10px; font-size:14px; background:#f8fafc; padding:10px; border-radius:10px; cursor:pointer;"><input
+                                type="checkbox" name="section" value="วัตถุประสงค์"> วัตถุประสงค์</label>
+                        <label
+                            style="display:flex; align-items:center; gap:10px; font-size:14px; background:#f8fafc; padding:10px; border-radius:10px; cursor:pointer;"><input
+                                type="checkbox" name="section" value="กิจกรรม/งวดงาน"> กิจกรรม/งวดงาน</label>
+                        <label
+                            style="display:flex; align-items:center; gap:10px; font-size:14px; background:#f8fafc; padding:10px; border-radius:10px; cursor:pointer;"><input
+                                type="checkbox" name="section" value="งบประมาณ"> งบประมาณ</label>
+                        <label
+                            style="display:flex; align-items:center; gap:10px; font-size:14px; background:#f8fafc; padding:10px; border-radius:10px; cursor:pointer;"><input
+                                type="checkbox" name="section" value="หลักฐานความคืบหน้า"> หลักฐานความคืบหน้า</label>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; font-weight: 700; font-size: 14px; margin-bottom: 8px;">2.
+                        คำแนะนำเพิ่มเติมจากสปอนเซอร์ (Feedback)</label>
+                    <textarea id="feedbackDetails" required
+                        placeholder="ระบุสิ่งที่ต้องการให้แก้ไข เช่น 'งวดงานที่ 2 รบกวนเพิ่มรายละเอียดการติดตั้งระบบและแนบใบเสร็จค่าโดเมนเพิ่มครับ'"
+                        style="width: 100%; height: 120px; padding: 15px; border: 1px solid var(--border-color); border-radius: 15px; font-family: 'Prompt'; resize: none; font-size:14px; line-height:1.6;"></textarea>
+                </div>
+
+                <div style="display: flex; gap: 15px;">
+                    <button type="button" onclick="closeDetailedRequest()"
+                        style="flex: 1; padding: 16px; border-radius: 50px; border: 1px solid var(--border-color); background: white; font-weight: 700; cursor: pointer;">ยกเลิก</button>
+                    <button type="submit"
+                        style="flex: 2; padding: 16px; border-radius: 50px; border: none; background: var(--warning); color: white; font-weight: 800; cursor: pointer;">ส่งกลับให้แก้ไข
+                        </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // --- Payment Modal Logic ---
+        function openPaymentModal(name, installment, amount) {
+            const modal = document.getElementById('paymentModal');
+            const content = document.getElementById('paymentContent');
+            modal.style.display = 'flex';
+            content.innerHTML = `
+                <div style="width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 20px; background:#eff6ff; color:var(--primary-blue);"><i class="fa-solid fa-money-bill-transfer"></i></div>
+                <h2 style="font-weight:800; font-size: 22px;">ยืนยันการโอนเงิน ${installment}</h2>
+                <p style="color:var(--text-gray); margin-top:10px;">โครงการ: <b>${name}</b></p>
+                <div style="margin-top:20px; text-align:left;">
+                    <label style="font-size:13px; font-weight:700; display:block; margin-bottom:8px;">ระบุจำนวนเงินที่ต้องการจะโอนจริง (THB)</label>
+                    <input type="number" id="payAmount" style="width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border-color); font-size: 18px; font-weight: 700; text-align: center; color: var(--primary-blue);" value="${amount.replace(/,/g, '')}">
+                </div>
+                <button class="confirm-btn" style="width: 100%; padding: 16px; border-radius: 50px; border: none; font-weight: 800; font-size: 16px; cursor: pointer; background:var(--text-dark); color:white; margin-top:20px;" onclick="processFinalPayment()">Confirm & Transfer</button>
+                <button class="btn-cancel" style="background: none; border: none; color: var(--text-gray); margin-top: 15px; cursor: pointer; font-weight: 600;" onclick="closePaymentModal()">ยกเลิก</button>
+            `;
+        }
+
+        function closePaymentModal() { document.getElementById('paymentModal').style.display = 'none'; }
+
+        function processFinalPayment() {
+            const amt = document.getElementById('payAmount').value;
+            alert('บันทึกการจ่ายเงินจำนวน ฿' + parseFloat(amt).toLocaleString() + ' เรียบร้อยแล้ว!');
+            closePaymentModal();
+        }
+
+        // --- Request Data Modal Logic ---
+        function openDetailedRequest() { document.getElementById('detailedRequestModal').style.display = 'flex'; }
+        function closeDetailedRequest() { document.getElementById('detailedRequestModal').style.display = 'none'; }
+
+        document.getElementById('detailedRequestForm').onsubmit = function (e) {
+            e.preventDefault();
+            const sections = Array.from(document.querySelectorAll('input[name="section"]:checked')).map(el => el.value);
+            if (sections.length === 0) return alert('กรุณาเลือกอย่างน้อย 1 หัวข้อที่ต้องการให้แก้ไข');
+
+            const feedback = document.getElementById('feedbackDetails').value;
+            alert('ส่งคำขอแก้ไขในหัวข้อ: ' + sections.join(', ') + ' สำเร็จ!\nระบบได้แจ้งเจ้าของโครงการแล้ว');
+            closeDetailedRequest();
+        };
+
+        // Close on overlay click
+        window.onclick = function (event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                closePaymentModal();
+                closeDetailedRequest();
+            }
+        }
+
+        function toggleDropdown() {
+            const menu = document.getElementById('userMenu');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
+
+        // ปิด Dropdown เมื่อคลิกข้างนอก
+        window.onclick = function (event) {
+            if (!event.target.closest('.user-dropdown')) {
+                const dropdowns = document.getElementById("userMenu");
+                if (dropdowns) dropdowns.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>

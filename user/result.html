@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Closing - iProject</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --accent-pink: #f472b6;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --bg-soft: #f8fafc;
+            --border-color: #e2e8f0;
+            --success: #10b981;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif; background-color: var(--bg-soft); color: var(--text-dark); }
+
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 80px; background: white; border-bottom: 1px solid var(--border-color); }
+        .logo { font-size: 24px; font-weight: 800; color: var(--text-dark); text-decoration: none; }
+
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+
+        /* Banner Success */
+        .success-banner {
+            background: linear-gradient(135deg, #065f46 0%, #10b981 100%);
+            color: white; border-radius: 24px; padding: 40px; text-align: center; margin-bottom: 30px;
+            box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.2);
+        }
+        .success-banner i { font-size: 60px; margin-bottom: 20px; }
+        .success-banner h1 { font-size: 32px; font-weight: 800; margin-bottom: 10px; }
+
+        .card { background: white; border-radius: 24px; padding: 35px; border: 1px solid var(--border-color); margin-bottom: 30px; }
+        .section-title { font-size: 18px; font-weight: 800; margin-bottom: 20px; color: var(--primary-blue); display: flex; align-items: center; gap: 10px; }
+        .section-title span { background: var(--accent-pink); width: 4px; height: 20px; border-radius: 10px; }
+
+        label { display: block; font-weight: 700; font-size: 14px; margin-bottom: 10px; }
+        textarea { width: 100%; padding: 15px; border-radius: 15px; border: 1px solid var(--border-color); font-family: 'Prompt'; font-size: 14px; margin-bottom: 20px; resize: none; }
+
+        /* File Upload Area */
+        .upload-area {
+            border: 2px dashed var(--border-color); border-radius: 20px; padding: 40px;
+            text-align: center; cursor: pointer; transition: 0.3s; background: #fafafa;
+        }
+        .upload-area:hover { border-color: var(--primary-blue); background: #f0f7ff; }
+        .upload-area i { font-size: 40px; color: var(--text-gray); margin-bottom: 15px; }
+
+        .btn-close-project {
+            background: var(--text-dark); color: white; border: none; padding: 20px;
+            border-radius: 50px; font-size: 18px; font-weight: 800; width: 100%; cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-close-project:hover { background: var(--primary-blue); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        
+        .user-dropdown a:hover {
+            background-color: #f8fafc;
+            color: var(--primary-blue) !important;
+        }
+
+        .user-dropdown button:hover {
+            border-color: var(--primary-blue);
+            background: white;
+        }
+    
+    </style>
+</head>
+<body>
+
+     <nav>
+        <a href="/user/home.html" class="logo">iProject</a>
+         <div style="display:flex; align-items:center; gap:30px;">
+
+            <!-- User Dropdown -->
+            <div class="user-dropdown" style="position: relative; display: inline-block;">
+                <button onclick="toggleDropdown()"
+                    style="display: flex; align-items: center; gap: 12px; background: #f8fafc; border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 50px; cursor: pointer; transition: 0.3s;">
+                    <div
+                        style="width: 32px; height: 32px; background: var(--primary-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800;">
+                        TV
+                    </div>
+                    <div style="text-align: left;">
+                        <p style="font-size: 13px; font-weight: 700; color: var(--text-dark); margin: 0;">นายวีรยุทธ รักชาติ</p>
+                        <p style="font-size: 11px; color: var(--text-gray); margin: 0;">User Account</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-down" style="font-size: 12px; color: var(--text-gray);"></i>
+                </button>
+
+                <!-- Dropdown Menu Content -->
+                <div id="userMenu"
+                    style="display: none; position: absolute; right: 0; top: 50px; background: white; min-width: 200px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1000; padding: 8px 0; overflow: hidden;">
+                    <a href="#"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-user-gear" style="color: var(--text-gray);"></i> Profile Settings
+                    </a>
+                    <a href="/user/user_notifications.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-bell" style="color: var(--text-gray);"></i> Notifications
+                    </a>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 8px 0;">
+                    <a href="/login/login.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--danger); font-size: 14px; font-weight: 700; transition: 0.2s;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="success-banner">
+            <i class="fa-solid fa-circle-check"></i>
+            <h1>Project Completed!</h1>
+            <p>กิจกรรมทั้งหมดดำเนินงานเสร็จสิ้น 100% แล้ว กรุณาส่งรายงานสรุปผล</p>
+        </div>
+
+        <form action="/user/view.html">
+            <div class="card">
+                <h2 class="section-title"><span></span>สรุปผลการดำเนินงาน</h2>
+                <div class="form-group">
+                    <label>สรุปความสำเร็จตามวัตถุประสงค์</label>
+                    <textarea rows="4" placeholder="อธิบายว่าโครงการบรรลุวัตถุประสงค์ที่ตั้งไว้ประการใดบ้าง..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>ปัญหาและอุปสรรคที่พบ (ถ้ามี)</label>
+                    <textarea rows="3" placeholder="ระบุปัญหาที่เกิดขึ้นระหว่างดำเนินงานและแนวทางแก้ไข"></textarea>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="section-title"><span></span>เอกสารแนบและรูปภาพกิจกรรม</h2>
+                <div class="upload-area">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <p><b>คลิกเพื่ออัปโหลดไฟล์</b> หรือลากไฟล์มาวางที่นี่</p>
+                    <p style="font-size: 12px; color: var(--text-gray); margin-top: 5px;">รองรับไฟล์ PDF, JPG, PNG (ไม่เกิน 20MB)</p>
+                </div>
+                
+                <div style="margin-top: 20px; display: flex; gap: 10px;">
+                    <div style="padding: 10px; background: #f1f5f9; border-radius: 10px; font-size: 13px; display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> Final_Report.pdf <i class="fa-solid fa-xmark" style="cursor:pointer"></i>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-close-project">ส่งรายงานและปิดโครงการ (Submit Final Report)</button>
+        </form>
+    </div>
+
+    <footer style="text-align: center; padding-bottom: 40px; font-size: 13px; color: var(--text-gray);">
+        &copy; 2026 iProject Management System. Your Vision, Our Reality.
+    </footer>
+
+    <script>
+        function toggleDropdown() {
+            const menu = document.getElementById('userMenu');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
+
+        // ปิด Dropdown เมื่อคลิกข้างนอก
+        window.onclick = function (event) {
+            if (!event.target.closest('.user-dropdown')) {
+                const dropdowns = document.getElementById("userMenu");
+                if (dropdowns) dropdowns.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

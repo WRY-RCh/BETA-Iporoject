@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project View - iProject</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --accent-pink: #f472b6;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --bg-soft: #f8fafc;
+            --border-color: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif;
+            background-color: var(--bg-soft);
+            color: var(--text-dark);
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 80px;
+            background-color: white;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        /* Lifecycle Stepper (Compact) */
+        .stepper-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            grid-column: span 2;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .step-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .step-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            margin-bottom: 10px;
+            z-index: 2;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #e2e8f0;
+        }
+
+        .step-item.active .step-dot {
+            background: var(--primary-blue);
+            box-shadow: 0 0 0 2px var(--primary-blue);
+        }
+
+        .step-item.active .step-label {
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+
+        .step-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-gray);
+            text-transform: uppercase;
+        }
+
+        .step-item::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background: #e2e8f0;
+            z-index: 1;
+        }
+
+        .step-item:last-child::after {
+            display: none;
+        }
+
+        /* Content Blocks */
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 35px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title span {
+            background: var(--accent-pink);
+            width: 4px;
+            height: 20px;
+            border-radius: 10px;
+        }
+
+        /* Left Column Info */
+        .project-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        .meta-tags {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .tag {
+            background: #f1f5f9;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .desc-text {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+        }
+
+        /* Table / List Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 12px;
+            font-size: 12px;
+            color: var(--text-gray);
+            border-bottom: 1px solid var(--border-color);
+            text-transform: uppercase;
+        }
+
+        .data-table td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #f8fafc;
+            font-size: 14px;
+        }
+
+        .task-check {
+            color: var(--success);
+            font-size: 18px;
+        }
+
+        /* Sidebar Widgets */
+        .widget-title {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .progress-circle-box {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .big-progress {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--primary-blue);
+            letter-spacing: -2px;
+        }
+
+        .member-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .member-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .member-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: #eef2ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .member-info b {
+            font-size: 14px;
+            display: block;
+        }
+
+        .member-info span {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .budget-total-card {
+            font-size: 12px;
+            background: #ffffff;
+            color: var(--text-dark);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .budget-total-card span {
+            opacity: 0.7;
+            font-weight: 800;
+        }
+
+        .budget-amount {
+            font-size: 32px;
+            font-weight: 800;
+            display: block;
+            color: var(--accent-pink);
+            margin-top: 5px;
+        }
+
+        /* Action Buttons */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: white;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-action:hover {
+            background: #f8fafc;
+        }
+
+        .btn-approve {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+        }
+
+        
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            /* เริ่มต้นให้ซ่อนไว้ */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .modal-card {
+            background: white;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary-blue);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 30px;
+            cursor: pointer;
+            color: var(--text-dark);
+        }
+
+        .instruction {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            padding: 14px;
+            border-radius: 50px;
+            border: 1px solid var(--border-color);
+            background: white;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-send {
+            flex: 2;
+            padding: 14px;
+            border-radius: 50px;
+            border: none;
+            background: var(--text-dark);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-send:hover {
+            background: var(--primary-blue);
+        }
+
+        .btn-request-edit {
+            background: #1e3a8a;
+            color: #eef2ff;
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-gray);
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .stepper-card {
+                display: none;
+            }
+        }
+
+        .user-dropdown a:hover {
+            background-color: #f8fafc;
+            color: var(--primary-blue) !important;
+        }
+
+        .user-dropdown button:hover {
+            border-color: var(--primary-blue);
+            background: white;
+        }
+        
+    </style>
+</head>
+
+<body>
+
+     <nav>
+        <a href="/user/home.html" class="logo">iProject</a>
+         <div style="display:flex; align-items:center; gap:30px;">
+            <!-- เมนูหลัก -->
+            <div style="display:flex; gap:20px;">
+                <a href="/user/my_projects.html"
+                    style="font-size:14px; font-weight:600; text-decoration: none; color: var(--text-dark);">My Projects</a>
+             </div>
+
+            <!-- User Dropdown -->
+            <div class="user-dropdown" style="position: relative; display: inline-block;">
+                <button onclick="toggleDropdown()"
+                    style="display: flex; align-items: center; gap: 12px; background: #f8fafc; border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 50px; cursor: pointer; transition: 0.3s;">
+                    <div
+                        style="width: 32px; height: 32px; background: var(--primary-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800;">
+                        TV
+                    </div>
+                    <div style="text-align: left;">
+                        <p style="font-size: 13px; font-weight: 700; color: var(--text-dark); margin: 0;">นายวีรยุทธ รักชาติ</p>
+                        <p style="font-size: 11px; color: var(--text-gray); margin: 0;">User Account</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-down" style="font-size: 12px; color: var(--text-gray);"></i>
+                </button>
+
+                <!-- Dropdown Menu Content -->
+                <div id="userMenu"
+                    style="display: none; position: absolute; right: 0; top: 50px; background: white; min-width: 200px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1000; padding: 8px 0; overflow: hidden;">
+                    <a href="#"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-user-gear" style="color: var(--text-gray);"></i> Profile Settings
+                    </a>
+                    <a href="/user/user_notifications.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-bell" style="color: var(--text-gray);"></i> Notifications
+                    </a>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 8px 0;">
+                    <a href="/login/login.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--danger); font-size: 14px; font-weight: 700; transition: 0.2s;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="stepper-card">
+            <div class="step-item active">
+                <div class="step-dot"></div>
+                <div class="step-label">Initiation</div>
+            </div>
+            <div class="step-item active">
+                <div class="step-dot"></div>
+                <div class="step-label">Planning</div>
+            </div>
+            <div class="step-item active">
+                <div class="step-dot"></div>
+                <div class="step-label">Execution</div>
+            </div>
+            <div class="step-item">
+                <div class="step-dot"></div>
+                <div class="step-label">Closing</div>
+            </div>
+        </div>
+
+        <main>
+            <div class="card">
+                <div class="meta-tags">
+                    <span class="tag"><i class="fa-solid fa-calendar"></i> May 2026 - Dec 2026</span>
+                    <span class="tag"><i class="fa-solid fa-location-dot"></i> Khok Muang, Thailand</span>
+                </div>
+                <h1 class="project-title">I-Corp System Development</h1>
+                <p class="desc-text"><b>หลักการและเหตุผล:</b>
+                    โครงการพัฒนาระบบบริหารจัดการโครงการอัจฉริยะเพื่อเพิ่มความโปร่งใสในองค์กรและลดขั้นตอนการทำงานที่ซ้ำซ้อน
+                    โดยเน้นการวัดผลความสำเร็จเป็นเปอร์เซ็นต์แบบเรียลไทม์...</p>
+                <p class="desc-text"><b>วัตถุประสงค์:</b> เพื่อสร้างระบบศูนย์กลางในการบริหารโครงการ
+                    และติดตามสถานะงบประมาณรายงวดได้อย่างแม่นยำ</p>
+                <div
+                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px; background: #f8fafc; border-radius: 15px; font-size: 14px;">
+                    <div><b>กลุ่มเป้าหมาย:</b> นักศึกษาและบุคลากร (100 คน)</div>
+                    <div><b>การประเมินผล:</b> แบบสอบถาม & ระบบ Audit Log</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="section-title"><span></span>5. แผนการดำเนินงาน (Task Execution)</h2>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th width="10%">สถานะ</th>
+                            <th width="70%">กิจกรรม</th>
+                            <th width="20%">น้ำหนัก</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="task-check"><i class="fa-solid fa-circle-check"></i></td>
+                            <td>ประชุมวางแผนและกำหนดโครงสร้างฐานข้อมูล</td>
+                            <td>20.00%</td>
+                        </tr>
+                        <tr>
+                            <td class="task-check"><i class="fa-solid fa-circle-check"></i></td>
+                            <td>พัฒนา Frontend ตาม UI ที่ออกแบบไว้ (V1-V5)</td>
+                            <td>30.00%</td>
+                        </tr>
+                        <tr>
+                            <td style="color:#cbd5e1"><i class="fa-solid fa-circle-dot"></i></td>
+                            <td>เชื่อมต่อ Backend และระบบคำนวณงบประมาณ</td>
+                            <td>40.00%</td>
+                        </tr>
+                        <tr>
+                            <td style="color:#cbd5e1"><i class="fa-solid fa-circle-dot"></i></td>
+                            <td>สรุปผลและจัดทำรายงาน Closing</td>
+                            <td>10.00%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2 class="section-title"><span></span>8. รายละเอียดงบประมาณ (Financials)</h2>
+                <div style="margin-bottom: 25px; border-left: 3px solid #e2e8f0; padding-left: 20px;">
+                    <b style="font-size: 14px; color: var(--text-gray);">งวดที่ 1: ขั้นตอนเตรียมความพร้อม</b>
+                    <table class="data-table" style="margin-top: 10px;">
+                        <tbody>
+                            <tr>
+                                <td>ค่าตอบแทนวิทยากรผู้เชี่ยวชาญ</td>
+                                <td>ค่าตอบแทน</td>
+                                <td>฿ 15,000.00</td>
+                            </tr>
+                            <tr>
+                                <td>ค่าจัดเลี้ยงอาหารกลางวัน (50 คน)</td>
+                                <td>ค่าใช้สอย</td>
+                                <td>฿ 7,500.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="border-left: 3px solid #e2e8f0; padding-left: 20px;">
+                    <b style="font-size: 14px; color: var(--text-gray);">งวดที่ 2: ขั้นตอนพัฒนาและติดตั้ง</b>
+                    <p style="font-size: 13px; color: #cbd5e1; margin-top: 10px;">(ยังไม่มีการเบิกจ่าย / รออนุมัติจาก
+                        Sponsor)</p>
+                </div>
+            </div>
+        </main>
+
+        <aside>
+            <div class="card" style="text-align: center;">
+                <span class="widget-title">Overall Progress</span>
+                <div class="progress-circle-box">
+                    <span class="big-progress">50%</span>
+                    <p style="font-size: 12px; font-weight: 700; color: var(--success); text-transform: uppercase;">On
+                        Track</p>
+                </div>
+                <div style="background: #f1f5f9; border-radius: 10px; height: 6px; width: 100%; overflow: hidden;">
+                    <div style="background: var(--primary-blue); height: 100%; width: 50%;"></div>
+                </div>
+            </div>
+
+            <div class="budget-total-card">
+                <span>Total Approved Budget</span>
+                <span class="budget-amount">฿ 225,000.00</span>
+                <div style="margin-top: 15px; font-size: 11px; opacity: 0.6;">* คำนวณจากยอดรวมทุกงวดงาน</div>
+            </div>
+
+            <div class="card" style="margin-top: 30px;">
+                <span class="widget-title">Project Team</span>
+                <div class="member-list">
+                    <div class="member-item">
+                        <div class="member-avatar">YR</div>
+                        <div class="member-info"><b>นายวีรยุทธ รักชาติ</b><span>Project Manager</span></div>
+                    </div>
+                    <div class="member-item">
+                        <div class="member-avatar" style="background:#fae8ff; color:#a21caf;">SP</div>
+                        <div class="member-info"><b>สมชาย สปอนเซอร์</b><span>Sponsor (Financial)</span></div>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn-action">
+                        <a href="/user/iproject_update.html">Update Project</a></button>
+                    <button onclick="openEditModal()" class="btn-request-edit">
+                        <i class="fa-solid fa-pen-to-square "></i> Request to Edit
+                    </button>
+
+                    <div id="editRequestModal" class="modal-overlay">
+                        <div class="modal-card">
+                            <div class="modal-header">
+                                <h2><i class="fa-solid fa-code-pull-request"></i> Request Project Edit</h2>
+                                <button class="close-btn" onclick="closeEditModal()">&times;</button>
+                            </div>
+
+                            <form id="editRequestForm">
+                                <div class="modal-body">
+                                    <p class="instruction">ระบุรายละเอียดที่คุณต้องการแก้ไขและเหตุผล
+                                        เพื่อให้ผู้ดูแลพิจารณาอนุมัติ</p>
+
+                                    <div class="form-group">
+                                        <label>หัวข้อที่ต้องการแก้ไข (Section to Edit)</label>
+                                        <select id="editSection" required>
+                                            <option value="">-- เลือกหัวข้อ --</option>
+                                            <option value="">ชื่อโครงการ</option>
+                                            <option value="">หลักการและเหตุผล</option>
+                                            <option value="">วัตถุประสงค์</option>
+                                            <option value="">กลุ่มเป้าหมาย</option>
+                                            <option value="">วิธีดำเนินการ / กิจกรรม</option>
+                                            <option value="">ระยะเวลาดำเนินการ</option>
+                                            <option value="">สถานที่ดำเนินการ</option>
+                                            <option value="">งบประมาณ / งวดงาน</option>
+                                            <option value="">ผู้รับผิดชอบโครงการ</option>
+                                            <option value="">การติดตามและประเมินผล</option>
+                                            <option value="">ผลที่คาดว่าจะได้รับ</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>ข้อมูลเดิม (Current Data)</label>
+                                        <textarea id="currentData" readonly
+                                            style="background: #f1f5f9; cursor: not-allowed;">ดึงข้อมูลเดิมจากระบบมาแสดงอัตโนมัติ...</textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>ข้อมูลที่ต้องการเปลี่ยนเป็น (New Proposed Data)</label>
+                                        <textarea id="newData" placeholder="พิมพ์ข้อมูลใหม่ที่คุณต้องการเปลี่ยน..."
+                                            required></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>เหตุผลในการขอแก้ไข (Reason for Request)</label>
+                                        <textarea id="editReason"
+                                            placeholder="อธิบายเหตุผลความจำเป็นในการแก้ไขครั้งนี้..." required
+                                            style="height: 80px; border-left: 3px solid var(--accent-pink);"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn-cancel" onclick="closeEditModal()">ยกเลิก</button>
+                                    <button type="submit" class="btn-send">ส่งคำขอแก้ไข (Submit Request)</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="widget-title">Expected Benefits</span>
+                <p style="font-size: 14px; color: var(--text-gray);">องค์กรมีระบบจัดการที่โปร่งใส 100%
+                    และลดเวลาในการประมวลผลเอกสารโครงการได้กว่า 50%</p>
+            </div>
+        </aside>
+    </div>
+
+    <footer>
+        &copy; 2026 iProject Management System. Your Vision, Our Reality.
+    </footer>
+
+</body>
+
+<script>
+    function openEditModal() {
+        document.getElementById('editRequestModal').style.display = 'flex';
+    }
+
+    function closeEditModal() {
+        document.getElementById('editRequestModal').style.display = 'none';
+    }
+
+    // ปิด Modal เมื่อคลิกพื้นหลัง
+    window.onclick = function (event) {
+        let modal = document.getElementById('editRequestModal');
+        if (event.target == modal) {
+            closeEditModal();
+        }
+    }
+
+    document.getElementById('editRequestForm').onsubmit = function (e) {
+        e.preventDefault();
+        alert('ส่งคำขอแก้ไขเรียบร้อยแล้ว! รอการอนุมัติ');
+        closeEditModal();
+    }
+
+    function toggleDropdown() {
+            const menu = document.getElementById('userMenu');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
+
+        // ปิด Dropdown เมื่อคลิกข้างนอก
+        window.onclick = function (event) {
+            if (!event.target.closest('.user-dropdown')) {
+                const dropdowns = document.getElementById("userMenu");
+                if (dropdowns) dropdowns.style.display = 'none';
+            }
+        }
+</script>
+
+</html>

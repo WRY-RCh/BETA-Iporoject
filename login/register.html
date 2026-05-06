@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - iProject Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --accent-pink: #f472b6;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --bg-soft: #f8fafc;
+            --border-color: #e2e8f0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif;
+            background-color: var(--bg-soft);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            /* ความสูงอย่างน้อยเท่ากับหน้าจอพอดี */
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            padding: 50px;
+        }
+
+        .brand-logo { 
+            font-size: 28px; font-weight: 800; color: var(--text-dark); 
+            text-decoration: none; text-align: center; display: block; margin-bottom: 30px;
+        }
+
+        .header { text-align: center; margin-bottom: 40px; }
+        .header h1 { font-size: 24px; font-weight: 800; color: var(--text-dark); }
+        .header p { font-size: 14px; color: var(--text-gray); margin-top: 5px; }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .full-width { grid-column: span 2; }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--text-dark); }
+        
+        .input-wrapper { position: relative; }
+        .input-wrapper i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-gray); font-size: 14px; }
+        
+        input, select {
+            width: 100%; padding: 12px 15px 12px 42px; border-radius: 12px;
+            border: 1px solid var(--border-color); font-family: inherit; font-size: 14px;
+            transition: 0.3s;
+        }
+
+        input:focus, select:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.08); }
+
+        .role-selector {
+            display: flex; gap: 10px; margin-top: 10px;
+        }
+
+        .role-option {
+            flex: 1; border: 1px solid var(--border-color); border-radius: 12px;
+            padding: 15px; text-align: center; cursor: pointer; transition: 0.3s;
+        }
+
+        .role-option input { display: none; }
+        .role-option i { display: block; font-size: 20px; margin-bottom: 5px; color: var(--text-gray); }
+        .role-option span { font-size: 12px; font-weight: 700; color: var(--text-gray); }
+
+        .role-option:has(input:checked) {
+            border-color: var(--primary-blue); background: #eff6ff;
+        }
+        .role-option:has(input:checked) i, .role-option:has(input:checked) span {
+            color: var(--primary-blue);
+        }
+
+        .btn-register {
+            background: var(--text-dark); color: white; border: none; padding: 16px;
+            border-radius: 50px; font-size: 16px; font-weight: 700; cursor: pointer;
+            transition: 0.3s; width: 100%; margin-top: 20px;
+        }
+
+        .btn-register:hover { background: var(--primary-blue); transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(30, 64, 175, 0.2); }
+
+        .login-link { text-align: center; margin-top: 25px; font-size: 14px; color: var(--text-gray); }
+        .login-link a { color: var(--primary-blue); font-weight: 700; text-decoration: none; }
+        footer { text-align: center; padding-top: 20px; color: var(--text-gray); font-size: 13px; font-weight: 400; }
+
+    </style>
+</head>
+<body class="wrapper">
+
+    <div class="register-container">
+        <a href="/user/home.html" class="brand-logo">iProject</a>
+        <div class="header">
+            <h1>Create Account</h1>
+            <p>ร่วมเป็นส่วนหนึ่งของระบบจัดการโครงการอัจฉริยะ</p>
+        </div>
+
+        <form action="/login/login.html">
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label>Full Name</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-id-card"></i>
+                        <input type="text" placeholder="ระบุชื่อ-นามสกุลจริง" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Username</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" placeholder="ตั้งชื่อผู้ใช้งาน" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" placeholder="example@mail.com" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-shield-check"></i>
+                        <input type="password" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Select Your Role</label>
+                    <div class="role-selector">
+                        <label class="role-option">
+                            <input type="radio" name="role" value="User" checked>
+                            <i class="fa-solid fa-user-pen"></i>
+                            <span>Project User</span>
+                        </label>
+                        <label class="role-option">
+                            <input type="radio" name="role" value="Sponsor">
+                            <i class="fa-solid fa-hand-holding-dollar"></i>
+                            <span>Sponsor</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-register">Create Account</button>
+        </form>
+
+        <div class="login-link">
+            Already have an account? <a href="/login/login.html">Sign In</a>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 iProject Management System. Built for Vision to Reality.
+    </footer>
+
+</body>
+</html>

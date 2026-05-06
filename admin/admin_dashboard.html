@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - iProject</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --bg-soft: #f1f5f9;
+            --border-color: #e2e8f0;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif; background-color: var(--bg-soft); color: var(--text-dark); }
+
+        /* Navbar & Dropdown (Updated with User Dropdown) */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 80px; background: white; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 24px; font-weight: 800; color: var(--text-dark); text-decoration: none; }
+
+        .container { max-width: 1400px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 250px 1fr; gap: 30px; }
+
+        /* Sidebar Menu */
+        .sidebar { background: white; border-radius: 20px; padding: 20px; border: 1px solid var(--border-color); height: fit-content; }
+        .side-link { display: flex; align-items: center; gap: 12px; padding: 12px 15px; text-decoration: none; color: var(--text-gray); font-weight: 600; border-radius: 12px; margin-bottom: 5px; transition: 0.3s; }
+        .side-link.active { background: var(--primary-blue); color: white; }
+        .side-link:hover:not(.active) { background: #f8fafc; color: var(--primary-blue); }
+
+        /* Stats Cards */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: white; padding: 25px; border-radius: 20px; border: 1px solid var(--border-color); }
+        .stat-card h3 { font-size: 13px; color: var(--text-gray); text-transform: uppercase; }
+        .stat-card p { font-size: 24px; font-weight: 800; margin-top: 10px; }
+
+        /* Table Area */
+        .main-card { background: white; border-radius: 20px; padding: 30px; border: 1px solid var(--border-color); }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .admin-table th { text-align: left; padding: 15px; font-size: 12px; color: var(--text-gray); border-bottom: 2px solid #f1f5f9; }
+        .admin-table td { padding: 15px; border-bottom: 1px solid #f8fafc; font-size: 14px; }
+
+        .status-pill { padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: 700; }
+        .pill-active { background: #dcfce7; color: #166534; }
+        .pill-review { background: #fff7ed; color: #9a3412; }
+
+        .user-dropdown { position: relative; }
+        #userMenu { display: none; position: absolute; right: 0; top: 45px; background: white; border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 180px; z-index: 1000; }
+        #userMenu a { display: block; padding: 10px 20px; text-decoration: none; color: var(--text-dark); font-size: 13px; border-radius: 10px; }
+        #userMenu a:hover { background: #f8fafc; color: var(--primary-blue); }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="#" class="logo">iProject <span style="color:var(--primary-blue)">Admin</span></a>
+    <div class="user-dropdown">
+        <button onclick="toggleDropdown()" style="display: flex; align-items: center; gap: 10px; background: none; border: none; cursor: pointer;">
+            <div style="width: 35px; height: 35px; background: var(--text-dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800;">AD</div>
+            <span style="font-weight: 700; font-size: 14px;">Administrator <i class="fa-solid fa-chevron-down"></i></span>
+        </button>
+        <div id="userMenu">
+            <a href="#"><i class="fa-solid fa-gear"></i> System Settings</a>
+            <hr style="border:0; border-top:1px solid #eee;">
+            <a href="#" style="color:var(--danger)"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <aside class="sidebar">
+        <a href="#" class="side-link active"><i class="fa-solid fa-chart-pie"></i> Overview</a>
+        <a href="#" class="side-link"><i class="fa-solid fa-folder-tree"></i> All Projects</a>
+        <a href="#" class="side-link"><i class="fa-solid fa-users-gear"></i> User Management</a>
+        <a href="#" class="side-link"><i class="fa-solid fa-shield-halved"></i> Audit Logs</a>
+    </aside>
+
+    <main>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Projects</h3>
+                <p>142</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Funding</h3>
+                <p>฿ 12.8M</p>
+            </div>
+            <div class="stat-card">
+                <h3>Active Sponsors</h3>
+                <p>34</p>
+            </div>
+            <div class="stat-card">
+                <h3>Pending Actions</h3>
+                <p style="color: var(--danger);">12</p>
+            </div>
+        </div>
+
+        <div class="main-card">
+            <h2 style="font-size: 18px; font-weight: 800;">System-wide Project Activity</h2>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Owner</th>
+                        <th>Sponsor</th>
+                        <th>Status</th>
+                        <th>Last Activity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Smart Agriculture IoT</b></td>
+                        <td>สมชาย สายเนิร์ด</td>
+                        <td>TechVision</td>
+                        <td><span class="status-pill pill-review">Needs Revision</span></td>
+                        <td>10 mins ago</td>
+                    </tr>
+                    <tr>
+                        <td><b>I-Corp System Dev</b></td>
+                        <td>วีรยุทธ รักชาติ</td>
+                        <td>Self-Funded</td>
+                        <td><span class="status-pill pill-active">Active</span></td>
+                        <td>2 hours ago</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<script>
+    function toggleDropdown() {
+        const menu = document.getElementById('userMenu');
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+    window.onclick = (e) => {
+        if (!e.target.closest('.user-dropdown')) document.getElementById('userMenu').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>

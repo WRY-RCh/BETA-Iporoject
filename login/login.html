@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - iProject Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --accent-pink: #f472b6;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --bg-soft: #f8fafc;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif;
+            background-color: var(--bg-soft);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            /* ความสูงอย่างน้อยเท่ากับหน้าจอพอดี */
+        }
+
+        /* การจัดเลย์เอาท์แบ่งซ้าย-ขวา */
+        .login-container {
+            display: flex;
+            width: 100%;
+            max-width: 1100px;
+            height: 650px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin: 20px;
+        }
+
+        /* ส่วนซ้าย: ตกแต่ง (Visual) */
+        .login-visual {
+            flex: 1.2;
+            background: linear-gradient(135deg, #1e40af 0%, #1e1b4b 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 60px;
+            position: relative;
+        }
+
+        .globe-min {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle at 30% 30%, #3b82f6, #1e40af);
+            border-radius: 50%;
+            margin-bottom: 40px;
+            box-shadow: 0 0 60px rgba(59, 130, 246, 0.5);
+            position: relative;
+        }
+
+        .visual-text h2 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .visual-text p {
+            font-size: 16px;
+            opacity: 0.7;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* ส่วนขวา: ฟอร์ม (Form) */
+        .login-form-area {
+            flex: 1;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .brand-logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            text-decoration: none;
+        }
+
+        .form-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 14px 14px 45px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            font-family: inherit;
+            transition: 0.3s;
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1);
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 13px;
+        }
+
+        .options a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .btn-login {
+            background: var(--text-dark);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        .btn-login:hover {
+            background: var(--primary-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(30, 64, 175, 0.3);
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .register-link a {
+            color: var(--primary-blue);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        @media (max-width: 900px) {
+            .login-visual {
+                display: none;
+            }
+
+            .login-container {
+                max-width: 450px;
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 5px;
+            color: var(--text-gray);
+            font-size: 13px;
+            font-weight: 400;
+        }
+    </style>
+</head>
+
+<body class="wrapper">
+
+    <div class="login-container wr">
+        <div class="login-visual">
+            <div class="globe-min"></div>
+            <div class="visual-text">
+                <h2>Welcome</h2>
+                <p>เข้าสู่ระบบ iProject เพื่อจัดการโครงการ<br>และติดตามความโปร่งใสด้านงบประมาณของคุณ</p>
+            </div>
+        </div>
+
+        <div class="login-form-area">
+            <a href="/user/home.html" class="brand-logo">iProject</a>
+            <div class="form-header">
+                <h1>Sign In</h1>
+            </div>
+
+            <form action="iproject_my_projects.html">
+                <div class="form-group">
+                    <label>Username</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" placeholder="Enter your username" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" placeholder="Enter your password" required>
+                    </div>
+                </div>
+
+                <div class="options">
+                    <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                        <input type="checkbox"> Remember me
+                    </label>
+                    <a href="#">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-login">
+                    <a href="/user/home.html" style="text-decoration: none; color: white ;">Login to
+                        Dashboard</a></button>
+            </form>
+
+            <div class="register-link">
+                Don't have an account? <a href="/login/register.html">Create Account</a>
+            </div>
+            <div class="register-link">
+                <a href="/user/home.html" style="padding: 5px;">User</a>
+                <a href="/Sponser/home.html" style="padding: 5px;">Sponsor</a>
+                <a href="/admin/home.html" style="padding: 5px;">Admin</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 iProject Management System. Built for Vision to Reality.
+    </footer>
+</body>
+
+</html>

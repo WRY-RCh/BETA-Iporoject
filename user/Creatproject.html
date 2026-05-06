@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สร้างโครงการ (Full Version) - iProject</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --accent-pink: #f472b6;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --bg-soft: #f8fafc;
+            --border-color: #e2e8f0;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif;
+            background-color: var(--bg-soft);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 80px;
+            background-color: white;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto 80px;
+            padding: 10px 20px;
+        }
+
+
+        /* Form Card */
+        .form-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 19px;
+            font-weight: 800;
+            margin-bottom: 25px;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title span {
+            background: var(--accent-pink);
+            width: 4px;
+            height: 22px;
+            border-radius: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 13px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-family: 'Prompt', sans-serif;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.08);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* User Management */
+        .user-list-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            background: #e0e7ff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .installment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #edf2f7;
+        }
+
+        /* Tables & Dynamic Elements */
+        .dynamic-list {
+            margin-bottom: 15px;
+        }
+
+        .list-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: flex-start;
+        }
+
+        .item-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .item-table th {
+            text-align: left;
+            padding: 10px;
+            font-size: 12px;
+            color: var(--text-gray);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .item-table td {
+            padding: 8px 5px;
+        }
+
+        .btn-add {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 13px;
+            transition: 0.3s;
+            margin-top: 5px;
+        }
+
+        .btn-add:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
+        }
+
+        .btn-add-item {
+            background: transparent;
+            color: var(--primary-blue);
+            border: 1px dashed var(--primary-blue);
+            padding: 8px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: 0.2s;
+        }
+
+        .btn-add-item:hover {
+            background: rgba(30, 64, 175, 0.05);
+        }
+
+        .btn-add-installment {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            transition: 0.3s;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .btn-add-installment:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(30, 64, 175, 0.2);
+        }
+
+        .btn-remove {
+            background: #fee2e2;
+            color: var(--danger);
+            border: none;
+            width: 40px;
+            height: 45px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-remove:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        .subtotal-box {
+            text-align: right;
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 15px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .budget-summary {
+            background: #f1f5f9;
+            padding: 25px;
+            border-radius: 20px;
+            margin-top: 25px;
+            text-align: right;
+            border: 1px dashed var(--border-color);
+        }
+
+        .total-amount {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary-blue);
+            display: block;
+            margin-top: 5px;
+        }
+
+        .btn-submit {
+            background: var(--text-dark);
+            color: white;
+            padding: 22px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 800;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-gray);
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #f8fafc;
+            color: var(--primary-blue) !important;
+        }
+
+        .user-dropdown button:hover {
+            border-color: var(--primary-blue);
+            background: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="/user/home.html" class="logo">iProject</a>
+         <div style="display:flex; align-items:center; gap:30px;">
+            <!-- เมนูหลัก -->
+            <div style="display:flex; gap:20px;">
+                <a href="/user/my_projects.html"
+                    style="font-size:14px; font-weight:600; text-decoration: none; color: var(--text-dark);">My Projects</a>
+             </div>
+
+            <!-- User Dropdown -->
+            <div class="user-dropdown" style="position: relative; display: inline-block;">
+                <button onclick="toggleDropdown()"
+                    style="display: flex; align-items: center; gap: 12px; background: #f8fafc; border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 50px; cursor: pointer; transition: 0.3s;">
+                    <div
+                        style="width: 32px; height: 32px; background: var(--primary-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800;">
+                        TV
+                    </div>
+                    <div style="text-align: left;">
+                        <p style="font-size: 13px; font-weight: 700; color: var(--text-dark); margin: 0;">นายวีรยุทธ รักชาติ</p>
+                        <p style="font-size: 11px; color: var(--text-gray); margin: 0;">User Account</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-down" style="font-size: 12px; color: var(--text-gray);"></i>
+                </button>
+
+                <!-- Dropdown Menu Content -->
+                <div id="userMenu"
+                    style="display: none; position: absolute; right: 0; top: 50px; background: white; min-width: 200px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1000; padding: 8px 0; overflow: hidden;">
+                    <a href="#"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-user-gear" style="color: var(--text-gray);"></i> Profile Settings
+                    </a>
+                    <a href="/user/user_notifications.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-bell" style="color: var(--text-gray);"></i> Notifications
+                    </a>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 8px 0;">
+                    <a href="/login/login.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--danger); font-size: 14px; font-weight: 700; transition: 0.2s;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div style="margin-bottom: 35px; text-align: center;">
+            <h1 style="font-size: 34px; font-weight: 800; letter-spacing: -1px;">Project Detail Planning</h1>
+            <p style="color: var(--text-gray); font-weight: 400;">กรอกข้อมูลให้ครบพื่อความสมบูรณ์ของโครงการ</p>
+        </div>
+
+        <form id="fullProjectForm">
+            <!-- หัวข้อ 1-3: Core Info -->
+            <div class="form-card">
+                <h2 class="section-title"><span></span>ข้อมูลพื้นฐานและวัตถุประสงค์</h2>
+                <div class="form-group">
+                    <label>1. ชื่อโครงการ (Project Title)</label>
+                    <input type="text" placeholder="ระบุชื่อโครงการที่สื่อความหมายชัดเจน" required>
+                </div>
+                <div class="form-group">
+                    <label>2. หลักการและเหตุผล (Rationale)</label>
+                    <textarea rows="4" placeholder="อธิบายความจำเป็น ที่มา และปัญหาที่ต้องการแก้ไข"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>3. วัตถุประสงค์ (Objectives)</label>
+                    <textarea rows="3" placeholder="ระบุสิ่งที่ต้องการทำและผลที่คาดหวัง"></textarea>
+                </div>
+            </div>
+
+            <!-- หัวข้อ 4, 6, 7: Target & Logistics -->
+            <div class="form-card">
+                <h2 class="section-title"><span></span>กลุ่มเป้าหมายและสถานที่</h2>
+                <div class="form-group">
+                    <label>4. เป้าหมาย/กลุ่มเป้าหมาย (Target Group)</label>
+                    <input type="text" placeholder="ระบุกลุ่มเป้าหมายและจำนวน (เช่น นักศึกษา 50 คน)">
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>6. วันเริ่มต้นโครงการ</label>
+                        <input type="date">
+                    </div>
+                    <div class="form-group">
+                        <label>6. วันสิ้นสุดโครงการ</label>
+                        <input type="date">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>7. สถานที่ดำเนินการ (Location)</label>
+                    <input type="text" placeholder="ระบุสถานที่จัดกิจกรรมหรือพื้นที่เป้าหมาย">
+                </div>
+            </div>
+
+            <!-- หัวข้อ 5: Tasks (Dynamic) -->
+            <div class="form-card">
+                <h2 class="section-title"><span></span>วิธีดำเนินการ / กิจกรรม (Tasks)</h2>
+                <div id="taskContainer" class="dynamic-list">
+                    <div class="list-item">
+                        <input type="text" placeholder="ชื่อกิจกรรมย่อย" style="flex: 3;" required>
+                        <input type="number" placeholder="น้ำหนักงาน (%)" style="flex: 1;" min="0" max="100">
+                        <div style="width: 40px;"></div>
+                    </div>
+                </div>
+                <button type="button" class="btn-add" onclick="addTask()"><i class="fa-solid fa-plus"></i>
+                    เพิ่มกิจกรรม</button>
+            </div>
+
+            <!-- หัวข้อ 8: Budget (Dynamic Installments) -->
+            <div class="form-card">
+                <h2 class="section-title"><span></span>รายละเอียดงบประมาณ (แยกตามงวดงาน)</h2>
+
+                <div id="installmentContainer">
+                    <!-- งวดที่ 1 (เริ่มต้น) -->
+                    <div class="budget-installment" id="installment-1">
+                        <div class="installment-header">
+                            <h3>งวดที่ 1</h3>
+                            <button type="button" class="btn-remove" onclick="removeInstallment(1)"
+                                style="display:none;"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+
+                        <table class="item-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 45%;">รายละเอียดค่าใช้จ่าย</th>
+                                    <th style="width: 25%;">หมวดหมู่</th>
+                                    <th style="width: 25%;">จำนวนเงิน (฿)</th>
+                                    <th style="width: 5%;"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="item-body">
+                                <tr>
+                                    <td><input type="text" placeholder="เช่น ค่าตอบแทนวิทยากร" required></td>
+                                    <td>
+                                        <select>
+                                            <option>ค่าตอบแทน</option>
+                                            <option>ค่าใช้สอย</option>
+                                            <option>ค่าวัสดุ</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" class="item-amount" step="0.01" placeholder="0.00"
+                                            oninput="calculateTotals()" required></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn-add-item" onclick="addItem(this)"><i
+                                class="fa-solid fa-plus"></i> เพิ่มรายการในงวดนี้</button>
+                        <div class="subtotal-box">รวมงวดที่ 1: <span class="subtotal-val">฿ 0.00</span></div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn-add-installment" onclick="addInstallment()"><i
+                        class="fa-solid fa-layer-group"></i> เพิ่มงวดงานใหม่</button>
+
+                <div class="budget-summary">
+                    <span style="font-weight: 600; opacity: 0.8;">งบประมาณรวมทั้งสิ้นของโครงการ</span>
+                    <span class="total-amount" id="grandTotal">฿ 0.00</span>
+                </div>
+            </div>
+
+            <!-- Project Managers -->
+            <div class="form-card">
+                <h2 class="section-title"><span></span>ผู้รับผิดชอบโครงการ (Project Managers)</h2>
+                <div id="userContainer">
+                    <div class="user-list-item">
+                        <div class="user-avatar"><i class="fa-solid fa-user-tie"></i></div>
+                        <input type="text" placeholder="ชื่อ-นามสกุล ผู้รับผิดชอบ" style="flex: 2;" required>
+                        <select style="flex: 1;">
+                            <option>Project Manager</option>
+                            <option>Project Team Members</option>
+                            <option>Project Coordinator</option>
+                            <option>Resource Manager</option>
+                            <option>Consultant</option>
+                        </select>
+                        <div style="width: 35px;"></div>
+                    </div>
+                </div>
+                <button type="button" class="btn-add-item" onclick="addUser()"><i class="fa-solid fa-user-plus"></i> Add
+                    User</button>
+            </div>
+            <!-- หัวข้อ 9-11: Responsibility & Results -->
+            <div class="form-card">
+                <h2 class="section-title"><span></span>ผลลัพธ์</h2>
+                <div class="form-group">
+                    <label>10. การติดตามและประเมินผล (Evaluation)</label>
+                    <input type="text" placeholder="วิธีการวัดผล (เช่น แบบสอบถาม, รายงาน)">
+                </div>
+                <div class="form-group">
+                    <label>11. ผลที่คาดว่าจะได้รับ (Expected Benefits)</label>
+                    <textarea rows="3" placeholder="ประโยชน์ที่ได้เมื่อโครงการเสร็จสิ้น"></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">Submit Complete Plan</button>
+        </form>
+    </div>
+
+    <footer>
+        &copy; 2026 iProject Management System. Built for Vision to Reality.
+    </footer>
+
+    <script>
+        function addTask() {
+            const container = document.getElementById('taskContainer');
+            const div = document.createElement('div');
+            div.className = 'list-item';
+            div.innerHTML = `
+                <input type="text" placeholder="ชื่อกิจกรรมย่อย" style="flex: 3;" required>
+                <input type="number" placeholder="%" style="flex: 1;" min="0" max="100">
+                <button type="button" class="btn-remove" onclick="this.parentElement.remove()"><i class="fa-solid fa-trash-can"></i></button>
+            `;
+            container.appendChild(div);
+        }
+
+        function addUser() {
+            const container = document.getElementById('userContainer');
+            const div = document.createElement('div');
+            div.className = 'user-list-item';
+            div.innerHTML = `
+                <div class="user-avatar"><i class="fa-solid fa-user-tie"></i></div>
+                <input type="text" placeholder="ชื่อ-นามสกุล ผู้รับผิดชอบ" style="flex: 2;" required>
+                <select style="flex: 1;">
+                    <option>Project Manager</option><option>Developer</option><option>Designer</option>
+                    <option>Coordinator</option><option>Consultant</option>
+                </select>
+                <button type="button" class="btn-remove" onclick="this.parentElement.remove()"><i class="fa-solid fa-xmark"></i></button>
+            `;
+            container.appendChild(div);
+        }
+
+        let installmentCounter = 1;
+        function addItem(btn) {
+            const tbody = btn.previousElementSibling.querySelector('.item-body');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="text" placeholder="ระบุรายละเอียด" required></td>
+                <td>
+                    <select>
+                        <option>ค่าตอบแทน</option>
+                        <option>ค่าใช้สอย</option>
+                        <option>ค่าวัสดุ</option>
+                    </select>
+                </td>
+                <td><input type="number" class="item-amount" step="0.01" placeholder="0.00" oninput="calculateTotals()" required></td>
+                <td><button type="button" class="btn-remove" onclick="this.parentElement.parentElement.remove(); calculateTotals();"><i class="fa-solid fa-xmark"></i></button></td>
+            `;
+            tbody.appendChild(tr);
+        }
+
+        function addInstallment() {
+            installmentCounter++;
+            const container = document.getElementById('installmentContainer');
+            const div = document.createElement('div');
+            div.className = 'budget-installment';
+            div.id = `installment-${installmentCounter}`;
+            div.innerHTML = `
+                <div class="installment-header">
+                    <h3>งวดที่ ${installmentCounter}</h3>
+                    <button type="button" class="btn-remove" style="display:block;" onclick="removeInstallment(${installmentCounter})"><i class="fa-solid fa-trash"></i></button>
+                </div>
+                <table class="item-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 45%;">รายละเอียดค่าใช้จ่าย</th>
+                            <th style="width: 25%;">หมวดหมู่</th>
+                            <th style="width: 25%;">จำนวนเงิน (฿)</th>
+                            <th style="width: 5%;"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="item-body">
+                        <tr>
+                            <td><input type="text" placeholder="ระบุรายละเอียด" required></td>
+                            <td>
+                                <select>
+                                    <option>ค่าตอบแทน</option>
+                                    <option>ค่าใช้สอย</option>
+                                    <option>ค่าวัสดุ</option>
+                                </select>
+                            </td>
+                            <td><input type="number" class="item-amount" step="0.01" placeholder="0.00" oninput="calculateTotals()" required></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="button" class="btn-add-item" onclick="addItem(this)"><i class="fa-solid fa-plus"></i> เพิ่มรายการในงวดนี้</button>
+                <div class="subtotal-box">รวมงวดที่ ${installmentCounter}: <span class="subtotal-val">฿ 0.00</span></div>
+            `;
+            container.appendChild(div);
+        }
+
+        function removeInstallment(id) {
+            document.getElementById(`installment-${id}`).remove();
+            calculateTotals();
+        }
+
+        function calculateTotals() {
+            let grandTotal = 0;
+            const installments = document.querySelectorAll('.budget-installment');
+
+            installments.forEach(inst => {
+                let subtotal = 0;
+                const amounts = inst.querySelectorAll('.item-amount');
+                amounts.forEach(amt => {
+                    if (amt.value) subtotal += parseFloat(amt.value);
+                });
+
+                inst.querySelector('.subtotal-val').innerText = '฿ ' + subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                grandTotal += subtotal;
+            });
+
+            document.getElementById('grandTotal').innerText = '฿ ' + grandTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function toggleDropdown() {
+            const menu = document.getElementById('userMenu');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
+
+        // ปิด Dropdown เมื่อคลิกข้างนอก
+        window.onclick = function (event) {
+            if (!event.target.closest('.user-dropdown')) {
+                const dropdowns = document.getElementById("userMenu");
+                if (dropdowns) dropdowns.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>

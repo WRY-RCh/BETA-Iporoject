@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Progress - iProject</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --accent-pink: #f472b6;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --bg-soft: #f8fafc;
+            --border-color: #e2e8f0;
+            --success: #10b981;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif; background-color: var(--bg-soft); color: var(--text-dark); }
+
+        /* Navigation */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 80px; background-color: white; border-bottom: 1px solid var(--border-color);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .logo { font-size: 24px; font-weight: 800; color: var(--text-dark); text-decoration: none; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 14px; }
+        .nav-links a:hover {color: var(--primary-blue);}
+        a {
+            text-decoration: none; color: white;
+        }
+        .logo { font-size: 24px; font-weight: 800; color: var(--text-dark); text-decoration: none; }
+
+        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+
+        .card { background: white; border-radius: 24px; padding: 35px; border: 1px solid var(--border-color); margin-bottom: 30px; }
+        .section-title { font-size: 18px; font-weight: 800; margin-bottom: 25px; color: var(--primary-blue); display: flex; align-items: center; gap: 10px; }
+        .section-title span { background: var(--accent-pink); width: 4px; height: 20px; border-radius: 10px; }
+
+        /* Task Checklist */
+        .task-item {
+            display: flex; align-items: center; gap: 15px; padding: 15px; border-radius: 15px;
+            border: 1px solid transparent; transition: 0.3s; margin-bottom: 10px; cursor: pointer;
+        }
+        .task-item:hover { background: #f8fafc; border-color: var(--border-color); }
+        .task-item.completed { background: #f0fdf4; }
+
+        input[type="checkbox"] {
+            width: 20px; height: 20px; accent-color: var(--success); cursor: pointer;
+        }
+
+        .task-info { flex: 1; }
+        .task-info b { font-size: 15px; display: block; }
+        .task-info span { font-size: 12px; color: var(--text-gray); }
+
+        /* Budget Payment Table */
+        .budget-table { width: 100%; border-collapse: collapse; }
+        .budget-table th { text-align: left; padding: 12px; font-size: 12px; color: var(--text-gray); border-bottom: 1px solid var(--border-color); }
+        .budget-table td { padding: 15px 12px; border-bottom: 1px solid #f8fafc; font-size: 14px; }
+
+        .status-pill {
+            padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: 700;
+        }
+        .unpaid { background: #fee2e2; color: #991b1b; }
+        .paid { background: #dcfce7; color: #166534; }
+
+        .btn-pay {
+            background: var(--text-dark); color: white; border: none; padding: 6px 12px;
+            border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer;
+        }
+
+        .summary-banner {
+            background: var(--primary-blue); color: white; border-radius: 20px; padding: 30px;
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;
+        }
+
+        .btn-save {
+            background: var(--success); color: white; border: none; padding: 18px 40px;
+            border-radius: 50px; font-size: 16px; font-weight: 800; cursor: pointer; width: 100%;
+        }
+
+
+        .user-dropdown a:hover {
+            background-color: #f8fafc;
+            color: var(--primary-blue) !important;
+        }
+
+        .user-dropdown button:hover {
+            border-color: var(--primary-blue);
+            background: white;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/user/home.html" class="logo">iProject</a>
+         <div style="display:flex; align-items:center; gap:30px;">
+            <!-- เมนูหลัก -->
+            <div style="display:flex; gap:20px;">
+                <a href="/user/my_projects.html"
+                    style="font-size:14px; font-weight:600; text-decoration: none; color: var(--text-dark);">My Projects</a>
+             </div>
+
+            <!-- User Dropdown -->
+            <div class="user-dropdown" style="position: relative; display: inline-block;">
+                <button onclick="toggleDropdown()"
+                    style="display: flex; align-items: center; gap: 12px; background: #f8fafc; border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 50px; cursor: pointer; transition: 0.3s;">
+                    <div
+                        style="width: 32px; height: 32px; background: var(--primary-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800;">
+                        TV
+                    </div>
+                    <div style="text-align: left;">
+                        <p style="font-size: 13px; font-weight: 700; color: var(--text-dark); margin: 0;">นายวีรยุทธ รักชาติ</p>
+                        <p style="font-size: 11px; color: var(--text-gray); margin: 0;">User Account</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-down" style="font-size: 12px; color: var(--text-gray);"></i>
+                </button>
+
+                <!-- Dropdown Menu Content -->
+                <div id="userMenu"
+                    style="display: none; position: absolute; right: 0; top: 50px; background: white; min-width: 200px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1000; padding: 8px 0; overflow: hidden;">
+                    <a href="#"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-user-gear" style="color: var(--text-gray);"></i> Profile Settings
+                    </a>
+                    <a href="/user/user_notifications.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-bell" style="color: var(--text-gray);"></i> Notifications
+                    </a>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 8px 0;">
+                    <a href="/login/login.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--danger); font-size: 14px; font-weight: 700; transition: 0.2s;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <div class="summary-banner">
+            <div>
+                <p style="font-size: 12px; opacity: 0.8; text-transform: uppercase; font-weight: 700; letter-spacing: 1px;">Project Health</p>
+                <h2 id="totalProgress">Current Progress: 50.00%</h2>
+            </div>
+            <div style="text-align: right;">
+                <p style="font-size: 12px; opacity: 0.8;">Total Spent</p>
+                <h2 id="totalSpent">฿ 22,500.00</h2>
+            </div>
+        </div>
+
+        <form id="updateForm" action="/user/view.html">
+            <div class="card">
+                <h2 class="section-title"><span></span>อัปเดตความคืบหน้ากิจกรรม (Tasks Execution)</h2>
+                <p style="font-size: 13px; color: var(--text-gray); margin-bottom: 20px;">ติ๊กเครื่องหมายถูกเมื่อกิจกรรมเสร็จสิ้น เพื่อคำนวณ % ความสำเร็จ</p>
+                
+                <div id="taskList">
+                    <label class="task-item">
+                        <input type="checkbox" class="task-check" data-weight="30" checked onchange="updateUI()">
+                        <div class="task-info">
+                            <b>ประชุมวางแผนและกำหนดโครงสร้าง</b>
+                            <span>น้ำหนักงาน: 30%</span>
+                        </div>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" class="task-check" data-weight="30" checked onchange="updateUI()">
+                        <div class="task-info">
+                            <b>พัฒนา Frontend ตาม UI (V1-V5)</b>
+                            <span>น้ำหนักงาน: 30%</span>
+                        </div>
+                    </label>
+                    <label class="task-item">
+                        <input type="checkbox" class="task-check" data-weight="40" onchange="updateUI()">
+                        <div class="task-info">
+                            <b>เชื่อมต่อ Backend และระบบงบประมาณ</b>
+                            <span>น้ำหนักงาน: 40%</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="section-title"><span></span>ติดตามการเบิกจ่ายงบประมาณ (Financial Tracking)</h2>
+                
+                <h4 style="font-size: 14px; color: var(--text-gray); margin: 20px 0 10px;">งวดที่ 1: ขั้นเตรียมความพร้อม</h4>
+                <table class="budget-table">
+                    <thead>
+                        <tr>
+                            <th>รายการค่าใช้จ่าย</th>
+                            <th>จำนวนเงิน</th>
+                            <th>สถานะ</th>
+                            <th>ดำเนินการ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ค่าตอบแทนวิทยากร</td>
+                            <td class="amount-val" data-val="15000">฿ 15,000.00</td>
+                            <td width="20%"><span class="status-pill unpaid">ยังไม่จ่าย</span></td>
+                            <td width="15%"><button type="button" class="btn-pay" onclick="pay(this)">จ่ายเงิน</button></td>
+                        </tr>
+                        <tr>
+                            <td>ค่าอาหารกลางวัน (50 คน)</td>
+                            <td class="amount-val" data-val="7500">฿ 7,500.00</td>
+                            <td width="20%"><span class="status-pill unpaid">ยังไม่จ่าย</span></td>
+                            <td width="15%"><button type="button" class="btn-pay" onclick="pay(this)">จ่ายเงิน</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 style="font-size: 14px; color: var(--text-gray); margin: 30px 0 10px;">งวดที่ 2: ขั้นพัฒนา</h4>
+                <table class="budget-table">
+                    <tbody>
+                        <tr>
+                            <td width="40%">ค่าเช่า Server รายปี</td>
+                            <td width="25%" class="amount-val unpaid-val" data-val="12000">฿ 12,000.00</td>
+                            <td width="20%"><span class="status-pill unpaid">ยังไม่จ่าย</span></td>
+                            <td width="15%"><button type="button" class="btn-pay" onclick="pay(this)">จ่ายเงิน</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button type="submit" class="btn-save"><a href="/user/result.html">บันทึกการอัปเดตโครงการ</a></button>
+        </form>
+    </div>
+
+    <footer style="text-align: center; padding-bottom: 40px; font-size: 13px; color: var(--text-gray);">
+        &copy; 2026 iProject Management System. Your Vision, Our Reality.
+    </footer>
+
+    <script>
+        function updateUI() {
+            // คำนวณเปอร์เซ็นต์งาน
+            let progress = 0;
+            document.querySelectorAll('.task-check').forEach(cb => {
+                if(cb.checked) progress += parseFloat(cb.getAttribute('data-weight'));
+                cb.parentElement.classList.toggle('completed', cb.checked);
+            });
+            document.getElementById('totalProgress').innerText = `Current Progress: ${progress.toFixed(2)}%`;
+
+            // คำนวณเงินที่จ่ายไปแล้ว
+            let spent = 0;
+            document.querySelectorAll('.status-pill.paid').forEach(pill => {
+                const amountTd = pill.parentElement.previousElementSibling;
+                spent += parseFloat(amountTd.getAttribute('data-val'));
+            });
+            document.getElementById('totalSpent').innerText = `฿ ${spent.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+        }
+
+        function toggleDropdown() {
+            const menu = document.getElementById('userMenu');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
+
+        // ปิด Dropdown เมื่อคลิกข้างนอก
+        window.onclick = function (event) {
+            if (!event.target.closest('.user-dropdown')) {
+                const dropdowns = document.getElementById("userMenu");
+                if (dropdowns) dropdowns.style.display = 'none';
+            }
+        }
+
+        function pay(btn) {
+            const row = btn.parentElement.parentElement;
+            const statusCell = row.querySelector('.status-pill');
+            statusCell.className = "status-pill paid";
+            statusCell.innerText = "จ่ายแล้ว";
+            btn.remove(); // ลบปุ่มออกหลังจ่าย
+            updateUI();
+        }
+
+        // Run เริ่มต้น
+        updateUI();
+
+
+
+    </script>
+</body>
+</html>

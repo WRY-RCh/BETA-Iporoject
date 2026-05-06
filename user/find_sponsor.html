@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Sponsor - iProject</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --accent-pink: #f472b6;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --bg-soft: #f8fafc;
+            --border-color: #e2e8f0;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif;
+            background-color: var(--bg-soft);
+            color: var(--text-dark);
+        }
+
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 80px; background-color: white; border-bottom: 1px solid var(--border-color);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .logo { font-size: 24px; font-weight: 800; color: var(--text-dark); text-decoration: none; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 14px; }
+        .nav-links a:hover {color: var(--primary-blue);}
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Search Area */
+        .search-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .search-section h1 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        .search-bar-container {
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+            background: white;
+            padding: 10px;
+            border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .search-bar-container input {
+            flex: 1;
+            border: none;
+            padding-left: 20px;
+            outline: none;
+            font-size: 16px;
+            font-family: 'Prompt';
+        }
+
+        .btn-search {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Filter Chips */
+        .filter-chips {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .chip {
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--border-color);
+            background: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .chip.active {
+            background: var(--text-dark);
+            color: white;
+            border-color: var(--text-dark);
+        }
+
+        /* Sponsor Grid */
+        .sponsor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .sponsor-card {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            transition: 0.3s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sponsor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .sponsor-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .sponsor-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            background: #e0e7ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--primary-blue);
+        }
+
+        .sponsor-info h3 {
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .sponsor-info p {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .interest-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background: #f1f5f9;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #475569;
+        }
+
+        .fund-limit {
+            font-size: 14px;
+            margin-bottom: 25px;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .fund-limit span {
+            color: var(--success);
+            font-weight: 800;
+        }
+
+        .btn-invite {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            transition: 0.3s;
+            margin-top: auto;
+        }
+
+        .btn-invite:hover {
+            background: var(--primary-blue);
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 0;
+            color: var(--text-gray);
+            font-size: 13px;
+        }
+
+
+        .user-dropdown a:hover {
+            background-color: #f8fafc;
+            color: var(--primary-blue) !important;
+        }
+
+        .user-dropdown button:hover {
+            border-color: var(--primary-blue);
+            background: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="/user/home.html" class="logo">iProject</a>
+         <div style="display:flex; align-items:center; gap:30px;">
+            <!-- เมนูหลัก -->
+            <div style="display:flex; gap:20px;">
+                <a href="/user/my_projects.html"
+                    style="font-size:14px; font-weight:600; text-decoration: none; color: var(--text-dark);">My Projects</a>
+             </div>
+
+            <!-- User Dropdown -->
+            <div class="user-dropdown" style="position: relative; display: inline-block;">
+                <button onclick="toggleDropdown()"
+                    style="display: flex; align-items: center; gap: 12px; background: #f8fafc; border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 50px; cursor: pointer; transition: 0.3s;">
+                    <div
+                        style="width: 32px; height: 32px; background: var(--primary-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800;">
+                        TV
+                    </div>
+                    <div style="text-align: left;">
+                        <p style="font-size: 13px; font-weight: 700; color: var(--text-dark); margin: 0;">นายวีรยุทธ รักชาติ</p>
+                        <p style="font-size: 11px; color: var(--text-gray); margin: 0;">User Account</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-down" style="font-size: 12px; color: var(--text-gray);"></i>
+                </button>
+
+                <!-- Dropdown Menu Content -->
+                <div id="userMenu"
+                    style="display: none; position: absolute; right: 0; top: 50px; background: white; min-width: 200px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1000; padding: 8px 0; overflow: hidden;">
+                    <a href="#"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-user-gear" style="color: var(--text-gray);"></i> Profile Settings
+                    </a>
+                    <a href="/user/user_notifications.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-bell" style="color: var(--text-gray);"></i> Notifications
+                    </a>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 8px 0;">
+                    <a href="/login/login.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--danger); font-size: 14px; font-weight: 700; transition: 0.2s;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <div class="search-section">
+            <h1>Find the Right Sponsor</h1>
+            <p style="color: var(--text-gray);">ค้นหาและส่งแผนงานไปยังแหล่งทุนที่ตรงกับความสนใจของโครงการคุณ</p>
+
+            <div class="search-bar-container">
+                <input type="text" placeholder="ค้นหาชื่อสปอนเซอร์, บริษัท, หรือหมวดหมู่ทุน...">
+                <button class="btn-search">Search</button>
+            </div>
+
+            <div class="filter-chips">
+                <button class="chip active">All</button>
+                <button class="chip">Technology</button>
+                <button class="chip">Community</button>
+                <button class="chip">Education</button>
+                <button class="chip">Environment</button>
+            </div>
+        </div>
+
+        <div class="sponsor-grid">
+            <!-- Sponsor 1 -->
+            <div class="sponsor-card">
+                <div class="sponsor-header">
+                    <div class="sponsor-img"><i class="fa-solid fa-building-columns"></i></div>
+                    <div class="sponsor-info">
+                        <h3>TechVision Foundation</h3>
+                        <p><i class="fa-solid fa-globe"></i> Global Sponsor</p>
+                    </div>
+                </div>
+                <div class="interest-tags">
+                    <span class="tag">AI & Data</span>
+                    <span class="tag">Software</span>
+                    <span class="tag">Smart City</span>
+                </div>
+                <p style="font-size: 14px; color: var(--text-gray); margin-bottom: 15px;">
+                    เน้นสนับสนุนโครงการพัฒนาแอปพลิเคชันและเทคโนโลยีเพื่อการเพิ่มประสิทธิภาพองค์กร</p>
+                <div class="fund-limit">Fund Range: <span>฿ 100k - 2.0M</span></div>
+                <a href="#" class="btn-invite" onclick="openProposalModal('TechVision Foundation')">Send Proposal</a>
+            </div>
+
+            <!-- Sponsor 2 -->
+            <div class="sponsor-card">
+                <div class="sponsor-header">
+                    <div class="sponsor-img" style="background:#fef2f2; color:#ef4444;"><i
+                            class="fa-solid fa-seedling"></i></div>
+                    <div class="sponsor-info">
+                        <h3>Green Earth Co.</h3>
+                        <p><i class="fa-solid fa-leaf"></i> Local Sponsor</p>
+                    </div>
+                </div>
+                <div class="interest-tags">
+                    <span class="tag">Sustainability</span>
+                    <span class="tag">Environment</span>
+                    <span class="tag">Agriculture</span>
+                </div>
+                <p style="font-size: 14px; color: var(--text-gray); margin-bottom: 15px;">
+                    มองหาโครงการนวัตกรรมที่เป็นมิตรต่อสิ่งแวดล้อมและการพัฒนาการเกษตรที่ยั่งยืน</p>
+                <div class="fund-limit">Fund Range: <span>฿ 50k - 500k</span></div>
+                <a href="#" class="btn-invite" onclick="openProposalModal('TechVision Foundation')">Send Proposal</a>
+            </div>
+
+            <!-- Sponsor 3 -->
+            <div class="sponsor-card">
+                <div class="sponsor-header">
+                    <div class="sponsor-img" style="background:#fff7ed; color:#f59e0b;"><i
+                            class="fa-solid fa-graduation-cap"></i></div>
+                    <div class="sponsor-info">
+                        <h3>EduNext Capital</h3>
+                        <p><i class="fa-solid fa-book"></i> Institutional Sponsor</p>
+                    </div>
+                </div>
+                <div class="interest-tags">
+                    <span class="tag">E-Learning</span>
+                    <span class="tag">Students</span>
+                    <span class="tag">Research</span>
+                </div>
+                <p style="font-size: 14px; color: var(--text-gray); margin-bottom: 15px;">
+                    สนับสนุนโครงการเพื่อการเรียนรู้และทุนวิจัยสำหรับนักศึกษาที่ต้องการสร้างนวัตกรรม</p>
+                <div class="fund-limit">Fund Range: <span>฿ 20k - 300k</span></div>
+                <a href="#" class="btn-invite" onclick="openProposalModal('TechVision Foundation')">Send Proposal</a>
+            </div>
+        </div>
+
+        <div id="proposalModal" class="modal-overlay"
+            style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000;">
+            <div class="modal-card"
+                style="background: white; width: 100%; max-width: 500px; border-radius: 24px; padding: 35px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+                <div class="modal-header"
+                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="font-size: 20px; font-weight: 800; color: var(--primary-blue);"><i
+                            class="fa-solid fa-paper-plane"></i> Send Proposal</h2>
+                    <button onclick="closeProposalModal()"
+                        style="background: none; border: none; font-size: 24px; cursor: pointer;">&times;</button>
+                </div>
+
+                <form id="proposalForm">
+                    <div class="modal-body">
+                        <p style="font-size: 14px; color: var(--text-gray); margin-bottom: 20px;">
+                            คุณกำลังส่งแผนงานไปยัง: <b id="targetSponsor" style="color: var(--text-dark);">TechVision
+                                Foundation</b></p>
+
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label
+                                style="display: block; font-weight: 700; font-size: 13px; margin-bottom: 8px;">เลือกโครงการของคุณ
+                                (Select Project)</label>
+                            <select id="projectSelect" required
+                                style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 12px; font-family: 'Prompt';">
+                                <option value="">-- เลือกโครงการที่ต้องการขอทุน --</option>
+                                <option value="1">I-Corp System Development (Progress: 0%)</option>
+                                <option value="2">Smart Agriculture IoT (Progress: 20%)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label
+                                style="display: block; font-weight: 700; font-size: 13px; margin-bottom: 8px;">ข้อความถึงสปอนเซอร์
+                                (Message to Sponsor)</label>
+                            <textarea placeholder="แนะนำโครงการสั้นๆ หรือระบุเหตุผลที่ต้องการสปอนเซอร์รายนี้..."
+                                style="width: 100%; height: 100px; padding: 12px; border: 1px solid var(--border-color); border-radius: 12px; font-family: 'Prompt'; resize: none;"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer" style="display: flex; gap: 15px; margin-top: 20px;">
+                        <button type="button" onclick="closeProposalModal()"
+                            style="flex: 1; padding: 14px; border-radius: 50px; border: 1px solid var(--border-color); background: white; font-weight: 700; cursor: pointer;">ยกเลิก</button>
+                        <button type="submit"
+                            style="flex: 2; padding: 14px; border-radius: 50px; border: none; background: var(--primary-blue); color: white; font-weight: 700; cursor: pointer;">ส่งข้อเสนอ
+                            (Submit Proposal)</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding-bottom: 40px; font-size: 13px; color: var(--text-gray);">
+        &copy; 2026 iProject Management System. Your Vision, Our Reality.
+    </footer>
+
+    <script>
+        function openProposalModal(sponsorName) {
+            document.getElementById('targetSponsor').innerText = sponsorName;
+            document.getElementById('proposalModal').style.display = 'flex';
+        }
+
+        function closeProposalModal() {
+            document.getElementById('proposalModal').style.display = 'none';
+        }
+
+        document.getElementById('proposalForm').onsubmit = function (e) {
+            e.preventDefault();
+            const projectName = document.getElementById('projectSelect').options[document.getElementById('projectSelect').selectedIndex].text;
+            alert('ส่งข้อเสนอโครงการ "' + projectName + '" ไปยังสปอนเซอร์เรียบร้อยแล้ว! \nสถานะโครงการจะถูกอัปเดตในหน้า Dashboard ของคุณ');
+            closeProposalModal();
+        };
+
+        function toggleDropdown() {
+            const menu = document.getElementById('userMenu');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
+
+        // ปิด Dropdown เมื่อคลิกข้างนอก
+        window.onclick = function (event) {
+            if (!event.target.closest('.user-dropdown')) {
+                const dropdowns = document.getElementById("userMenu");
+                if (dropdowns) dropdowns.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>
