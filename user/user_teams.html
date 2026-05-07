@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linked Accounts - iProject</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --bg-soft: #f8fafc;
+            --border-color: #e2e8f0;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif;
+            background-color: var(--bg-soft);
+            color: var(--text-dark);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 80px;
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+        }
+
+        /* Sidebar Menu */
+        .settings-sidebar {
+            background: white;
+            border-radius: 24px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            height: fit-content;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--text-gray);
+            font-weight: 600;
+            border-radius: 12px;
+            margin-bottom: 5px;
+            transition: 0.3s;
+        }
+
+        .menu-item.active {
+            background: #eff6ff;
+            color: var(--primary-blue);
+        }
+
+        .menu-item:hover:not(.active) {
+            background: #f8fafc;
+            color: var(--text-dark);
+        }
+
+        /* Content Card */
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: var(--text-dark);
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 15px;
+        }
+
+        /* Social Connection Item */
+        .account-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 15px;
+            transition: 0.2s;
+        }
+
+        .account-item:hover {
+            border-color: var(--primary-blue);
+            background: #fcfdff;
+        }
+
+        .account-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .account-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .icon-google {
+            background: #fef2f2;
+            color: #db4437;
+        }
+
+        .icon-line {
+            background: #f0fdf4;
+            color: #06c755;
+        }
+
+        .icon-github {
+            background: #f1f5f9;
+            color: #333;
+        }
+
+        .btn-link {
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--border-color);
+            background: white;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-link.linked {
+            color: var(--danger);
+            border-color: #fee2e2;
+            background: #fffbff;
+        }
+
+        .btn-link:hover:not(.linked) {
+            background: var(--text-dark);
+            color: white;
+            border-color: var(--text-dark);
+        }
+
+        .btn-link.linked:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        .status-text {
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="/user/home.html" class="logo">iProject</a>
+        <div style="display:flex; align-items:center; gap:30px;">
+            <!-- เมนูหลัก -->
+            <div style="display:flex; gap:20px;">
+                <a href="/user/my_projects.html"
+                    style="font-size:14px; font-weight:600; text-decoration: none; color: var(--text-dark);">My
+                    Projects</a>
+            </div>
+
+            <!-- User Dropdown -->
+            <div class="user-dropdown" style="position: relative; display: inline-block;">
+                <button onclick="toggleDropdown()"
+                    style="display: flex; align-items: center; gap: 12px; background: #f8fafc; border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 50px; cursor: pointer; transition: 0.3s;">
+                    <div
+                        style="width: 32px; height: 32px; background: var(--primary-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800;">
+                        TV
+                    </div>
+                    <div style="text-align: left;">
+                        <p style="font-size: 13px; font-weight: 700; color: var(--text-dark); margin: 0;">นายวีรยุทธ
+                            รักชาติ</p>
+                        <p style="font-size: 11px; color: var(--text-gray); margin: 0;">User Account</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-down" style="font-size: 12px; color: var(--text-gray);"></i>
+                </button>
+
+                <!-- Dropdown Menu Content -->
+                <div id="userMenu"
+                    style="display: none; position: absolute; right: 0; top: 50px; background: white; min-width: 200px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1000; padding: 8px 0; overflow: hidden;">
+                    <a href="/user/user_profile.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-user-gear" style="color: var(--text-gray);"></i> Profile Settings
+                    </a>
+                    <a href="/user/user_notifications.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-bell" style="color: var(--text-gray);"></i> Notifications
+                    </a>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 8px 0;">
+                    <a href="/login/login.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--danger); font-size: 14px; font-weight: 700; transition: 0.2s;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <aside class="settings-sidebar">
+            <a href="/user/user_profile.html" class="menu-item"><i class="fa-solid fa-user"></i> My Profile</a>
+            <a href="/user/user_teams.html" class="menu-item active"><i class="fa-solid fa-users"></i> My Team</a>
+            <a href="/user/user_security.html" class="menu-item"><i class="fa-solid fa-lock"></i> Security</a>
+            <a href="/user/user_linked.html" class="menu-item "><i class="fa-solid fa-wallet"></i> Linked
+                Accounts</a>
+            <hr style="margin: 15px 0; border: 0; border-top: 1px solid var(--border-color);">
+            <a href="#" class="menu-item" style="color: var(--danger);"><i class="fa-solid fa-trash"></i> Delete
+                Account</a>
+        </aside>
+
+        <main class="card" style="background: transparent; border: none; padding: 0; box-shadow: none;">
+            <div
+                style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; background: white; padding: 20px; border-radius: 24px; border: 1px solid var(--border-color);">
+                <div>
+                    <h2 style="font-size: 24px; font-weight: 800; color: var(--text-dark); margin-bottom: 8px;">
+                        จัดการทีมประจำ (Permanent Teams)</h2>
+                    <p style="color: var(--text-gray); font-size: 14px;">
+                        สร้างและบริหารจัดการกลุ่มสมาชิกเพื่อเรียกใช้งานในโครงการต่างๆ ได้อย่างรวดเร็ว</p>
+                </div>
+                <button class="btn-add-team" onclick="openTeamModal('add')"
+                    style="background: var(--primary-blue); color: white; border: none; padding: 14px 15px; border-radius: 16px; font-weight: 700; cursor: pointer; transition: 0.3s;">
+                    <i class="fa-solid fa-plus-circle"></i> สร้างทีมใหม่
+                </button>
+            </div>
+
+            <div id="teamGrid" class="team-grid"
+                style="display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 25px;">
+            </div>
+        </main>
+
+        <div id="teamModal" class="modal-overlay"
+            style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; justify-content:center; align-items:center; backdrop-filter: blur(4px);">
+            <div
+                style="background:white; width:90%; max-width:600px; padding:30px; border-radius:28px; max-height:85vh; overflow-y:auto;">
+                <h3 id="modalTitle" style="font-size:22px; font-weight:800; margin-bottom:20px;">สร้างทีมใหม่</h3>
+
+                <div style="margin-bottom:15px;">
+                    <label style="display:block; font-size:14px; font-weight:700; margin-bottom:8px;">ชื่อทีม</label>
+                    <input type="text" id="modalTeamName"
+                        style="width:100%; padding:12px; border-radius:12px; border:1px solid #e2e8f0; font-family:'Prompt';">
+                </div>
+
+                <div style="margin-bottom:20px;">
+                    <label
+                        style="display:block; font-size:14px; font-weight:700; margin-bottom:8px;">คำอธิบายทีม</label>
+                    <textarea id="modalTeamDesc"
+                        style="width:100%; padding:12px; border-radius:12px; border:1px solid #e2e8f0; height:80px; font-family:'Prompt'; resize:none;"></textarea>
+                </div>
+
+                <div style="margin-bottom:20px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <label style="font-size:14px; font-weight:700;">สมาชิกและโรล</label>
+                        <button onclick="addMemberRow()"
+                            style="background:var(--primary-blue); color:white; border:none; padding:5px 12px; border-radius:8px; font-size:12px; cursor:pointer;">+
+                            เพิ่มสมาชิก</button>
+                    </div>
+                    <div id="memberRowsContainer">
+                    </div>
+                </div>
+
+                <div style="display:flex; gap:10px;">
+                    <button onclick="closeTeamModal()"
+                        style="flex:1; padding:12px; border-radius:12px; border:1px solid #e2e8f0; background:white; cursor:pointer; font-weight:700;">ยกเลิก</button>
+                    <button onclick="saveTeam()"
+                        style="flex:1; padding:12px; border-radius:12px; border:none; background:var(--primary-blue); color:white; cursor:pointer; font-weight:700;">บันทึกข้อมูล</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDropdown() {
+            const menu = document.getElementById('userMenu');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
+
+        // ปิด Dropdown เมื่อคลิกข้างนอก
+        window.onclick = function (event) {
+            if (!event.target.closest('.user-dropdown')) {
+                const dropdowns = document.getElementById("userMenu");
+                if (dropdowns) dropdowns.style.display = 'none';
+            }
+        }
+
+
+        function openTeamModal() {
+            document.getElementById('teamModal').style.display = 'flex';
+        }
+
+        function closeTeamModal() {
+            document.getElementById('teamModal').style.display = 'none';
+        }
+
+        // ปิด Modal เมื่อคลิกพื้นหลัง
+        window.onclick = function (event) {
+            let modal = document.getElementById('teamModal');
+            let userMenu = document.getElementById('userMenu');
+
+            if (event.target == modal) {
+                closeTeamModal();
+            }
+
+            // ตรวจสอบ Dropdown จากโค้ดเดิมของคุณ
+            if (!event.target.closest('.user-dropdown')) {
+                if (userMenu) userMenu.style.display = 'none';
+            }
+        }
+
+        function deleteTeam(id) {
+            if (confirm('ยืนยันการลบทีมนี้? ข้อมูลสมาชิกในทีมจะถูกลบออกทั้งหมด')) {
+                myTeams = myTeams.filter(t => t.id !== id);
+                renderTeams();
+            }
+        }
+
+        // ข้อมูลเริ่มต้น
+    let teams = [
+        {
+            id: Date.now(),
+            name: "Core Innovation Team",
+            createdDate: "10 ม.ค. 2026",
+            desc: "ทีมพัฒนาหลักสำหรับโครงการวิจัยและพัฒนาระบบ AI ภายในองค์กร เชี่ยวชาญด้าน Python และ Cloud Architecture",
+            members: [
+                { name: "Weerayut Rakchat", role: "Project Manager" },
+                { name: "Somchai S.", role: "Project Team Members" }
+            ]
+        }
+    ];
+
+    let currentEditId = null;
+    const roles = ["Project Manager", "Project Team Members", "Project Coordinator", "Resource Manager", "Consultant", "Other"];
+
+    // ฟังก์ชันวาดการ์ดทั้งหมด
+    function renderTeams() {
+        const grid = document.getElementById('teamGrid');
+        grid.innerHTML = '';
+
+        teams.forEach(team => {
+            const card = document.createElement('div');
+            card.className = 'team-card-ui';
+            card.style.cssText = "background: white; border-radius: 24px; border: 1px solid var(--border-color); padding: 25px; transition: 0.3s; position: relative; overflow: hidden;";
+            
+            let membersHtml = team.members.map((m, index) => `
+                <div style="display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 12px 16px; border-radius: 16px; margin-bottom: 8px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 38px; height: 38px; background: ${index === 0 ? 'var(--primary-blue)' : '#ec4899'}; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px;">
+                            ${m.name.substring(0, 2).toUpperCase()}
+                        </div>
+                        <div>
+                            <div style="font-size: 14px; font-weight: 700;">${m.name}</div>
+                            <div style="font-size: 11px; color: ${index === 0 ? 'var(--primary-blue)' : 'var(--text-gray)'}; font-weight: 600; text-transform: uppercase;">${m.role}</div>
+                        </div>
+                    </div>
+                    ${index === 0 ? '<i class="fa-solid fa-crown" style="color: #fbbf24;"></i>' : ``}
+                </div>
+            `).join('');
+
+            card.innerHTML = `
+                <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--primary-blue);"></div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                    <div>
+                        <h3 style="font-size: 18px; font-weight: 800; color: var(--text-dark);">${team.name}</h3>
+                        <div style="font-size: 12px; color: var(--text-gray); margin-top: 4px;"><i class="fa-solid fa-calendar-day"></i> สร้างเมื่อ: ${team.createdDate}</div>
+                    </div>
+                </div>
+                <p style="font-size: 14px; color: var(--text-gray); line-height: 1.6; margin-bottom: 25px; min-height: 45px;">${team.desc}</p>
+                <div style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 25px;">
+                    ${membersHtml}
+                </div>
+                <div style="display: flex; gap: 10px; padding-top: 20px; border-top: 1px solid #f1f5f9;">
+                    <button onclick="openTeamModal('edit', ${team.id})" style="flex: 1; padding: 10px; border-radius: 12px; border: 1px solid var(--border-color); background: white; font-size: 13px; font-weight: 700; cursor: pointer;"><i class="fa-solid fa-pen-to-square"></i> แก้ไขข้อมูลทีม</button>
+                    <button onclick="deleteTeam(${team.id})" style="padding: 10px 15px; border-radius: 12px; border: 1px solid #fee2e2; background: #fffcfc; color: var(--danger); cursor: pointer;"><i class="fa-solid fa-trash-can"></i></button>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    // เปิด Modal
+    function openTeamModal(mode, id = null) {
+        currentEditId = id;
+        const modal = document.getElementById('teamModal');
+        const container = document.getElementById('memberRowsContainer');
+        container.innerHTML = '';
+        
+        if (mode === 'edit') {
+            const team = teams.find(t => t.id === id);
+            document.getElementById('modalTitle').innerText = "แก้ไขทีม";
+            document.getElementById('modalTeamName').value = team.name;
+            document.getElementById('modalTeamDesc').value = team.desc;
+            team.members.forEach(m => addMemberRow(m.name, m.role));
+        } else {
+            document.getElementById('modalTitle').innerText = "สร้างทีมใหม่";
+            document.getElementById('modalTeamName').value = '';
+            document.getElementById('modalTeamDesc').value = '';
+            addMemberRow(); // เริ่มต้น 1 แถวว่าง
+        }
+        modal.style.display = 'flex';
+    }
+
+    // เพิ่มแถวสมาชิกใน Modal
+    function addMemberRow(name = '', role = '') {
+        const container = document.getElementById('memberRowsContainer');
+        const row = document.createElement('div');
+        row.style.cssText = "display:flex; gap:8px; margin-bottom:10px; align-items:center;";
+        
+        let roleOptions = roles.map(r => `<option value="${r}" ${r === role ? 'selected' : ''}>${r}</option>`).join('');
+        
+        row.innerHTML = `
+            <input type="text" class="m-name" placeholder="ชื่อสมาชิก" value="${name}" style="flex:2; padding:8px; border-radius:8px; border:1px solid #e2e8f0; font-size:13px;">
+            <select class="m-role" style="flex:2; padding:8px; border-radius:8px; border:1px solid #e2e8f0; font-size:13px;">
+                ${roleOptions}
+            </select>
+            <button onclick="this.parentElement.remove()" style="background:none; border:none; color:#cbd5e1; cursor:pointer;"><i class="fa-solid fa-circle-minus"></i></button>
+        `;
+        container.appendChild(row);
+    }
+
+    // บันทึก (สร้างหรือแก้ไข)
+    function saveTeam() {
+        const name = document.getElementById('modalTeamName').value;
+        const desc = document.getElementById('modalTeamDesc').value;
+        const rows = document.querySelectorAll('#memberRowsContainer > div');
+        
+        let members = [];
+        rows.forEach(row => {
+            const mName = row.querySelector('.m-name').value;
+            const mRole = row.querySelector('.m-role').value;
+            if (mName) members.push({ name: mName, role: mRole });
+        });
+
+        if (!name) { alert("กรุณาใส่ชื่อทีม"); return; }
+
+        if (currentEditId) {
+            // แก้ไข
+            const index = teams.findIndex(t => t.id === currentEditId);
+            teams[index].name = name;
+            teams[index].desc = desc;
+            teams[index].members = members;
+        } else {
+            // สร้างใหม่
+            teams.push({
+                id: Date.now(),
+                name: name,
+                createdDate: new Date().toLocaleDateString('th-TH', {day:'numeric', month:'short', year:'numeric'}),
+                desc: desc,
+                members: members
+            });
+        }
+        
+        closeTeamModal();
+        renderTeams();
+    }
+
+    // ลบการ์ด
+    function deleteTeam(id) {
+        if (confirm("คุณต้องการลบทีมนี้ใช่หรือไม่?")) {
+            teams = teams.filter(t => t.id !== id);
+            renderTeams();
+        }
+    }
+
+    // ลบสมาชิกตรงจากการ์ด
+    function removeMemberDirectly(teamId, memberIndex) {
+        const team = teams.find(t => t.id === teamId);
+        if (team && team.members.length > 1) {
+            team.members.splice(memberIndex, 1);
+            renderTeams();
+        } else {
+            alert("ทีมต้องมีสมาชิกอย่างน้อย 1 คน");
+        }
+    }
+
+    function closeTeamModal() {
+        document.getElementById('teamModal').style.display = 'none';
+    }
+
+    // เริ่มต้นระบบ
+    document.addEventListener('DOMContentLoaded', renderTeams);
+    </script>
+
+</body>
+
+</html>

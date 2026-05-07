@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details (Admin) - iProject</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --bg-soft: #f8fafc;
+            --border-color: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif; background-color: var(--bg-soft); color: var(--text-dark); }
+
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 80px; background: white; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 24px; font-weight: 800; color: var(--text-dark); text-decoration: none; }
+
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+
+        .card { background: white; border-radius: 24px; padding: 35px; border: 1px solid var(--border-color); margin-bottom: 30px; }
+        .section-title { font-size: 18px; font-weight: 800; margin-bottom: 20px; color: var(--primary-blue); display: flex; align-items: center; gap: 10px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
+
+        /* Admin Highlight Styles */
+        .admin-badge { padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+        .badge-id { background: #f1f5f9; color: var(--text-dark); }
+        .badge-status { background: #dcfce7; color: #166534; }
+
+        .data-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f8fafc; font-size: 14px; }
+        .data-label { color: var(--text-gray); font-weight: 500; }
+        .data-value { font-weight: 700; text-align: right; }
+
+        .timeline { position: relative; padding-left: 30px; margin-top: 20px; }
+        .timeline-item { position: relative; margin-bottom: 20px; padding-bottom: 10px; border-left: 2px solid var(--border-color); padding-left: 20px; }
+        .timeline-item::before { content: ""; position: absolute; left: -7px; top: 0; width: 12px; height: 12px; border-radius: 50%; background: var(--border-color); }
+        .timeline-item.active::before { background: var(--primary-blue); }
+
+        .btn-danger { background: white; color: var(--danger); border: 1px solid var(--danger); padding: 12px; border-radius: 50px; width: 100%; font-weight: 700; cursor: pointer; margin-top: 10px; transition: 0.3s; }
+        .btn-danger:hover { background: var(--danger); color: white; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="admin_dashboard.html" class="logo">iProject <span style="color:var(--primary-blue)">Admin</span></a>
+        <button onclick="history.back()" style="background:none; border:none; color:var(--text-gray); font-weight:700; cursor:pointer;"><i class="fa-solid fa-arrow-left"></i> Back to Inventory</button>
+    </nav>
+
+    <div class="container">
+        <main>
+            <!-- ส่วนข้อมูลพื้นฐาน (Project Summary) -->
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px;">
+                    <div>
+                        <span class="admin-badge badge-id">Project ID: #PRJ-001</span>
+                        <h1 style="font-size: 28px; font-weight: 800; margin-top: 10px;">I-Corp System Development</h1>
+                    </div>
+                    <span class="admin-badge badge-status">Active Project</span>
+                </div>
+                
+                <p style="color: var(--text-gray); font-size: 15px; margin-bottom: 20px; line-height: 1.6;">
+                    ข้อมูลรายละเอียดโครงการทั้งหมดที่ User กรอกไว้ในระบบ เพื่อให้แอดมินตรวจสอบความถูกต้องย้อนหลัง
+                </p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="data-row"><span class="data-label">Project Owner:</span> <span class="data-value">นายวีรยุทธ รักชาติ</span></div>
+                    <div class="data-row"><span class="data-label">Email:</span> <span class="data-value">weerayut@corp.com</span></div>
+                    <div class="data-row"><span class="data-label">Sponsor:</span> <span class="data-value">Self-Funded</span></div>
+                    <div class="data-row"><span class="data-label">Budget Range:</span> <span class="data-value">฿ 225,000.00</span></div>
+                </div>
+            </div>
+
+            <!-- ส่วนประวัติงบประมาณ (Financial Tracking) -->
+            <div class="card">
+                <h2 class="section-title"><i class="fa-solid fa-hand-holding-dollar"></i> Financial Tracking (Admin View)</h2>
+                <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                    <thead>
+                        <tr style="text-align: left; color: var(--text-gray); border-bottom: 1px solid var(--border-color);">
+                            <th style="padding: 10px;">Installment</th>
+                            <th style="padding: 10px;">Amount</th>
+                            <th style="padding: 10px;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 15px 10px;">งวดที่ 1</td>
+                            <td style="padding: 15px 10px;">฿ 75,000.00</td>
+                            <td style="padding: 15px 10px;"><span style="color: var(--success); font-weight: 700;">Paid</span></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px 10px;">งวดที่ 2</td>
+                            <td style="padding: 15px 10px;">฿ 50,000.00</td>
+                            <td style="padding: 15px 10px;"><span style="color: var(--warning); font-weight: 700;">Pending</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ประวัติกิจกรรมโครงการ (Detailed Audit Trail) -->
+            <div class="card">
+                <h2 class="section-title"><i class="fa-solid fa-clock-rotate-left"></i> Project History Logs</h2>
+                <div class="timeline">
+                    <div class="timeline-item active">
+                        <b style="font-size: 14px;">โอนเงินงวดที่ 1 สำเร็จ</b><br>
+                        <span style="font-size: 12px; color: var(--text-gray);">06 May 2026, 14:30 | โดย Administrator</span>
+                    </div>
+                    <div class="timeline-item">
+                        <b style="font-size: 14px;">สปอนเซอร์กดยอมรับการแก้ไข (Accept Revision)</b><br>
+                        <span style="font-size: 12px; color: var(--text-gray);">06 May 2026, 11:15 | โดย TechVision</span>
+                    </div>
+                    <div class="timeline-item">
+                        <b style="font-size: 14px;">User ส่งโครงการกลับมาตรวจสอบ (Resubmitted)</b><br>
+                        <span style="font-size: 12px; color: var(--text-gray);">06 May 2026, 10:00 | โดย นายวีรยุทธ[cite: 2]</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <aside>
+            <!-- Admin Control Actions -->
+            <div class="card" style="border: 2px solid var(--border-color);">
+                <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 20px;">Administrative Actions</h3>
+                <button class="btn-danger" style="color: var(--primary-blue); border-color: var(--primary-blue);" onclick="alert('Exporting project data to PDF...')">
+                    <i class="fa-solid fa-file-export"></i> Export Project Report
+                </button>
+                <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--border-color);">
+                <p style="font-size: 12px; color: var(--text-gray); margin-bottom: 10px;">Danger Zone</p>
+                <button class="btn-danger" onclick="confirm('Are you sure you want to suspend this project?')">
+                    <i class="fa-solid fa-ban"></i> Suspend Project
+                </button>
+                <button class="btn-danger" style="margin-top: 10px;" onclick="confirm('Permanent delete cannot be undone!')">
+                    <i class="fa-solid fa-trash-can"></i> Delete Project
+                </button>
+            </div>
+
+            <!-- Documents View -->
+            <div class="card">
+                <h3 style="font-size: 14px; font-weight: 800; color: var(--text-gray); text-transform: uppercase; margin-bottom: 15px;">Official Documents</h3>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <a href="#" style="text-decoration: none; color: var(--text-dark); font-size: 14px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fa-solid fa-file-pdf" style="color: var(--danger);"></i> Full_Proposal_V2.pdf
+                    </a>
+                    <a href="#" style="text-decoration: none; color: var(--text-dark); font-size: 14px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fa-solid fa-file-shield" style="color: var(--primary-blue);"></i> Audit_Log_Report.csv[cite: 2]
+                    </a>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+</body>
+</html>

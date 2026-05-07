@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linked Accounts - iProject</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --bg-soft: #f8fafc;
+            --border-color: #e2e8f0;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif;
+            background-color: var(--bg-soft);
+            color: var(--text-dark);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 80px;
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+        }
+
+        /* Sidebar Menu */
+        .settings-sidebar {
+            background: white;
+            border-radius: 24px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            height: fit-content;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--text-gray);
+            font-weight: 600;
+            border-radius: 12px;
+            margin-bottom: 5px;
+            transition: 0.3s;
+        }
+
+        .menu-item.active {
+            background: #eff6ff;
+            color: var(--primary-blue);
+        }
+
+        .menu-item:hover:not(.active) {
+            background: #f8fafc;
+            color: var(--text-dark);
+        }
+
+        /* Content Card */
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: var(--text-dark);
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 15px;
+        }
+
+        /* Social Connection Item */
+        .account-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 15px;
+            transition: 0.2s;
+        }
+
+        .account-item:hover {
+            border-color: var(--primary-blue);
+            background: #fcfdff;
+        }
+
+        .account-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .account-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .icon-google {
+            background: #fef2f2;
+            color: #db4437;
+        }
+
+        .icon-line {
+            background: #f0fdf4;
+            color: #06c755;
+        }
+
+        .icon-github {
+            background: #f1f5f9;
+            color: #333;
+        }
+
+        .btn-link {
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--border-color);
+            background: white;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-link.linked {
+            color: var(--danger);
+            border-color: #fee2e2;
+            background: #fffbff;
+        }
+
+        .btn-link:hover:not(.linked) {
+            background: var(--text-dark);
+            color: white;
+            border-color: var(--text-dark);
+        }
+
+        .btn-link.linked:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        .status-text {
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="/user/home.html" class="logo">iProject</a>
+        <div style="display:flex; align-items:center; gap:30px;">
+            <!-- เมนูหลัก -->
+            <div style="display:flex; gap:20px;">
+                <a href="/user/my_projects.html"
+                    style="font-size:14px; font-weight:600; text-decoration: none; color: var(--text-dark);">My
+                    Projects</a>
+            </div>
+
+            <!-- User Dropdown -->
+            <div class="user-dropdown" style="position: relative; display: inline-block;">
+                <button onclick="toggleDropdown()"
+                    style="display: flex; align-items: center; gap: 12px; background: #f8fafc; border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 50px; cursor: pointer; transition: 0.3s;">
+                    <div
+                        style="width: 32px; height: 32px; background: var(--primary-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800;">
+                        TV
+                    </div>
+                    <div style="text-align: left;">
+                        <p style="font-size: 13px; font-weight: 700; color: var(--text-dark); margin: 0;">นายวีรยุทธ
+                            รักชาติ</p>
+                        <p style="font-size: 11px; color: var(--text-gray); margin: 0;">User Account</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-down" style="font-size: 12px; color: var(--text-gray);"></i>
+                </button>
+
+                <!-- Dropdown Menu Content -->
+                <div id="userMenu"
+                    style="display: none; position: absolute; right: 0; top: 50px; background: white; min-width: 200px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1000; padding: 8px 0; overflow: hidden;">
+                    <a href="/user/user_profile.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-user-gear" style="color: var(--text-gray);"></i> Profile Settings
+                    </a>
+                    <a href="/user/user_notifications.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-bell" style="color: var(--text-gray);"></i> Notifications
+                    </a>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 8px 0;">
+                    <a href="/login/login.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--danger); font-size: 14px; font-weight: 700; transition: 0.2s;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <aside class="settings-sidebar">
+            <a href="/user/user_profile.html" class="menu-item"><i class="fa-solid fa-user"></i> My Profile</a>
+            <a href="/user/user_teams.html" class="menu-item "><i class="fa-solid fa-users"></i> My Team</a>
+            <a href="/user/user_security.html" class="menu-item"><i class="fa-solid fa-lock"></i> Security</a>
+            <a href="/user/user_linked.html" class="menu-item active"><i class="fa-solid fa-wallet"></i> Linked
+                Accounts</a>
+            <hr style="margin: 15px 0; border: 0; border-top: 1px solid var(--border-color);">
+            <a href="#" class="menu-item" style="color: var(--danger);"><i class="fa-solid fa-trash"></i> Delete
+                Account</a>
+        </aside>
+
+        <main class="card">
+            <h2 class="section-title">บัญชีที่เชื่อมต่อ (Linked Accounts)</h2>
+            <p style="color: var(--text-gray); font-size: 14px; margin-bottom: 30px;">
+                เชื่อมต่อบัญชีของคุณกับบริการภายนอกเพื่อความสะดวกในการล็อกอินและการรับแจ้งเตือนสถานะโครงการ</p>
+
+            <!-- Google Account -->
+            <div class="account-item">
+                <div class="account-info">
+                    <div class="account-icon icon-google"><i class="fa-brands fa-google"></i></div>
+                    <div>
+                        <h4 style="font-size: 15px; font-weight: 700;">Google Account</h4>
+                        <p class="status-text" style="color: var(--success);">เชื่อมต่อแล้ว: weerayut.r@gmail.com</p>
+                    </div>
+                </div>
+                <button class="btn-link linked">Disconnect</button>
+            </div>
+
+            <!-- Line Account -->
+            <div class="account-item">
+                <div class="account-info">
+                    <div class="account-icon icon-line"><i class="fa-brands fa-line"></i></div>
+                    <div>
+                        <h4 style="font-size: 15px; font-weight: 700;">Line Notify</h4>
+                        <p class="status-text" style="color: var(--text-gray);">
+                            รับแจ้งเตือนความคืบหน้าและการอนุมัติเงินผ่าน Line</p>
+                    </div>
+                </div>
+                <button class="btn-link" onclick="alert('Redirecting to Line OAuth...')">Connect</button>
+            </div>
+
+            <!-- GitHub Account -->
+            <div class="account-item">
+                <div class="account-info">
+                    <div class="account-icon icon-github"><i class="fa-brands fa-github"></i></div>
+                    <div>
+                        <h4 style="font-size: 15px; font-weight: 700;">GitHub</h4>
+                        <p class="status-text" style="color: var(--text-gray);">เชื่อมโยง Repository
+                            สำหรับโครงการซอฟต์แวร์</p>
+                    </div>
+                </div>
+                <button class="btn-link" onclick="alert('Redirecting to GitHub OAuth...')">Connect</button>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        function toggleDropdown() {
+            const menu = document.getElementById('userMenu');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
+
+        // ปิด Dropdown เมื่อคลิกข้างนอก
+        window.onclick = function (event) {
+            if (!event.target.closest('.user-dropdown')) {
+                const dropdowns = document.getElementById("userMenu");
+                if (dropdowns) dropdowns.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+
+</html>

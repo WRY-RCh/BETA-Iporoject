@@ -381,7 +381,7 @@
                     และหลักฐานที่แนบมาก่อนตัดสินใจโอนเงินงวดที่ 2</p>
 
                 <button class="btn-pay-now" style="width: 100%; padding: 15px; margin-bottom: 10px;"
-                    onclick="openPaymentModal('I-Corp System Dev', 'งวดที่ 2', '50,000.00')">อนุมัติและระบุยอดโอนเงิน</button>
+                    onclick="openPaymentModal('I-Corp System Dev', 'งวดที่ 2', '50,000.00')">อนุมัติการทำงานงวดถัดไป</button>
                 <button onclick="openDetailedRequest()"
                     style="width: 100%; padding: 15px; border-radius: 50px; border: 1px solid var(--warning); background: white; color: var(--warning); font-weight: 700; cursor: pointer;">ขอข้อมูลเพิ่มเติม
                     (Request Data)</button>
@@ -474,11 +474,7 @@
                 <div style="width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 20px; background:#eff6ff; color:var(--primary-blue);"><i class="fa-solid fa-money-bill-transfer"></i></div>
                 <h2 style="font-weight:800; font-size: 22px;">ยืนยันการโอนเงิน ${installment}</h2>
                 <p style="color:var(--text-gray); margin-top:10px;">โครงการ: <b>${name}</b></p>
-                <div style="margin-top:20px; text-align:left;">
-                    <label style="font-size:13px; font-weight:700; display:block; margin-bottom:8px;">ระบุจำนวนเงินที่ต้องการจะโอนจริง (THB)</label>
-                    <input type="number" id="payAmount" style="width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border-color); font-size: 18px; font-weight: 700; text-align: center; color: var(--primary-blue);" value="${amount.replace(/,/g, '')}">
-                </div>
-                <button class="confirm-btn" style="width: 100%; padding: 16px; border-radius: 50px; border: none; font-weight: 800; font-size: 16px; cursor: pointer; background:var(--text-dark); color:white; margin-top:20px;" onclick="processFinalPayment()">Confirm & Transfer</button>
+                <button class="confirm-btn" style="width: 100%; padding: 16px; border-radius: 50px; border: none; font-weight: 800; font-size: 16px; cursor: pointer; background:var(--text-dark); color:white; margin-top:20px;" onclick="processFinalPayment()">Confirm</button>
                 <button class="btn-cancel" style="background: none; border: none; color: var(--text-gray); margin-top: 15px; cursor: pointer; font-weight: 600;" onclick="closePaymentModal()">ยกเลิก</button>
             `;
         }
@@ -486,8 +482,7 @@
         function closePaymentModal() { document.getElementById('paymentModal').style.display = 'none'; }
 
         function processFinalPayment() {
-            const amt = document.getElementById('payAmount').value;
-            alert('บันทึกการจ่ายเงินจำนวน ฿' + parseFloat(amt).toLocaleString() + ' เรียบร้อยแล้ว!');
+            alert('บันทึกการจ่ายเรียบร้อยแล้ว!');
             closePaymentModal();
         }
 

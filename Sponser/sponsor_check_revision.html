@@ -258,7 +258,7 @@
     <div class="container">
         <div class="rev-header">
             <h1>ตรวจสอบการแก้ไขโครงการ</h1>
-            <p style="color: var(--text-gray);">ผู้เสนอโครงการได้ดำเนินการแก้ไขใน 2 หัวข้อตามที่ท่านร้องขอ</p>
+            <p style="color: var(--text-gray);">ผู้เสนอโครงการได้ดำเนินการแก้ไขใน 2 หัวข้อ</p>
         </div>
 
         <!-- เปรียบเทียบงบประมาณ -->
@@ -274,9 +274,7 @@
             <div class="compare-card" style="border-color: var(--success);">
                 <span class="card-label" style="color: var(--success);">ข้อมูลใหม่</span>
                 <p class="new-data">฿ 165,000.00</p>
-                <div class="diff-box">
-                    <i class="fa-solid fa-circle-check"></i> ปรับตามที่ร้องขอเรียบร้อยแล้ว
-                </div>
+                    
             </div>
         </div>
 
@@ -294,13 +292,11 @@
                 <span class="card-label" style="color: var(--success);">ข้อมูลใหม่</span>
                 <p class="new-data">"พัฒนา Mobile App รองรับ iOS/Android พร้อมระบบแจ้งเตือนผ่าน Line Notify
                     และแสดงผลกราฟความชื้นแบบ Real-time"</p>
-                <div class="diff-box">
-                    <i class="fa-solid fa-circle-check"></i> ปรับตามที่ร้องขอเรียบร้อยแล้ว
-                </div>
+                
             </div>
         </div>
 
-        <!-- เอกสารแนบใหม่ -->
+        <!-- เอกสารแนบใหม่   
         <div class="compare-card" style="margin-top: 40px;">
             <span class="card-label">เอกสารประกอบการพิจารณาที่แนบเพิ่ม</span>
             <div style="display: flex; gap: 10px;">
@@ -313,7 +309,7 @@
         </div>
     </div>
 
-    <!-- แถบปุ่มตัดสินใจ -->
+    แถบปุ่มตัดสินใจ 
     <div class="action-bar">
         <div class="action-container">
             <button class="btn btn-reject" onclick="openDetailedRequest()">
@@ -325,7 +321,7 @@
         </div>
     </div>
 
-    <!-- Request Data (Revision) Modal -->
+    Request Data (Revision) Modal 
     <div id="detailedRequestModal" class="modal-overlay">
         <div class="modal-card" style="width: 95%; max-width: 650px;">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
@@ -376,12 +372,12 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div>-->
 
     <script>
         function handleAction(type) {
             if (type === 'accept') {
-                if (confirm('คุณตรวจสอบความถูกต้องและต้องการอนุมัติโครงการนี้ใช่หรือไม่?[cite: 1]')) {
+                if (confirm('คุณตรวจสอบความถูกต้องและต้องการอนุมัติโครงการนี้ใช่หรือไม่?')) {
                     alert('อนุมัติโครงการเรียบร้อย! ระบบจะแจ้งเจ้าของโครงการและเริ่มงวดงานที่ 1 ทันที');
                     location.href = 'sponsor_dashboard.html';
                 }

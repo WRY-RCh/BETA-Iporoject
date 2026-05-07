@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iProject</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Prompt:wght@300;400;600&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary-blue: #1e40af;
@@ -30,14 +33,39 @@
 
         /* Navigation */
         nav {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 80px; background-color: white; border-bottom: 1px solid var(--border-color);
-            position: sticky; top: 0; z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 80px;
+            background-color: white;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .logo { font-size: 24px; font-weight: 800; color: var(--text-dark); text-decoration: none; }
-        .nav-links { display: flex; gap: 20px; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 14px; }
-        .nav-links a:hover {color: var(--primary-blue);}
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
 
         /* Hero Section */
         .hero {
@@ -108,7 +136,7 @@
             height: 100%;
             background: radial-gradient(circle at 30% 30%, #3b82f6, #1e40af);
             border-radius: 50%;
-            box-shadow: inset -20px -20px 50px rgba(0,0,0,0.3), 0 0 80px rgba(59,130,246,0.3);
+            box-shadow: inset -20px -20px 50px rgba(0, 0, 0, 0.3), 0 0 80px rgba(59, 130, 246, 0.3);
         }
 
         .orbit {
@@ -125,21 +153,40 @@
 
         /* Responsive */
         @media (max-width: 1024px) {
-            nav { padding: 20px 40px; }
-            .hero { flex-direction: column; text-align: center; padding-top: 150px; }
-            .hero-content h1 { font-size: 60px; }
-            .hero-visual { justify-content: center; margin-top: 50px; }
-            .globe-container { width: 350px; height: 350px; }
+            nav {
+                padding: 20px 40px;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 150px;
+            }
+
+            .hero-content h1 {
+                font-size: 60px;
+            }
+
+            .hero-visual {
+                justify-content: center;
+                margin-top: 50px;
+            }
+
+            .globe-container {
+                width: 350px;
+                height: 350px;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <nav>
-        <a href="#" class="logo">iProject</a>
+        <a href="/admin/home.html" class="logo">iProject <span style="color:var(--primary-blue)">Admin</span></a>
+
         <div class="nav-links">
-            <a href="/user/Creatproject.html" class="btn-nav-new"><span>+</span>Find Projects</a>
-            <a href="/Sponser/sponsor_dashboard.html">Dashboard</a>
+            <a href="/admin/admin_dashboard.html">Dashboard</a>
             <a href="/login/login.html">Login</a>
         </div>
     </nav>
@@ -148,9 +195,9 @@
         <div class="hero-content">
             <h1>Vision to Reality<br>Driven by Clarity</h1>
             <p>Bring projects to life with a clear management system.</p>
-            <a href="/Sponser/sponsor_dashboard.html" class="btn-main-new"> <i class=""></i>Sponser Dashboard</a>
+            <a href="/admin/admin_dashboard.html" class="btn-main-new"> <i class=""></i>Admin Dashboard</a>
         </div>
-        
+
         <div class="hero-visual">
             <div class="globe-container">
                 <div class="globe-bg"></div>
@@ -160,4 +207,5 @@
     </main>
 
 </body>
+
 </html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings - iProject</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --accent-pink: #f472b6;
+            --text-dark: #0f172a;
+            --text-gray: #64748b;
+            --bg-soft: #f8fafc;
+            --border-color: #e2e8f0;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif;
+            background-color: var(--bg-soft);
+            color: var(--text-dark);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 80px;
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+        }
+
+        /* Sidebar Menu */
+        .settings-sidebar {
+            background: white;
+            border-radius: 24px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            height: fit-content;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--text-gray);
+            font-weight: 600;
+            border-radius: 12px;
+            margin-bottom: 5px;
+            transition: 0.3s;
+        }
+
+        .menu-item.active {
+            background: #eff6ff;
+            color: var(--primary-blue);
+        }
+
+        .menu-item:hover:not(.active) {
+            background: #f8fafc;
+            color: var(--text-dark);
+        }
+
+        /* Content Card */
+        .profile-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: var(--text-dark);
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 15px;
+        }
+
+        /* Profile Avatar Upload */
+        .avatar-upload {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .avatar-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 30px;
+            background: var(--primary-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-upload {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-upload:hover {
+            border-color: var(--primary-blue);
+            color: var(--primary-blue);
+        }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full {
+            grid-column: span 2;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-gray);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-family: 'Prompt';
+            font-size: 14px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.05);
+        }
+
+        .btn-save {
+            background: var(--text-dark);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 800;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-save:hover {
+            background: var(--primary-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="/user/home.html" class="logo">iProject</a>
+        <div style="display:flex; align-items:center; gap:30px;">
+            <!-- เมนูหลัก -->
+            <div style="display:flex; gap:20px;">
+                <a href="/user/my_projects.html"
+                    style="font-size:14px; font-weight:600; text-decoration: none; color: var(--text-dark);">My
+                    Projects</a>
+            </div>
+
+            <!-- User Dropdown -->
+            <div class="user-dropdown" style="position: relative; display: inline-block;">
+                <button onclick="toggleDropdown()"
+                    style="display: flex; align-items: center; gap: 12px; background: #f8fafc; border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 50px; cursor: pointer; transition: 0.3s;">
+                    <div
+                        style="width: 32px; height: 32px; background: var(--primary-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800;">
+                        TV
+                    </div>
+                    <div style="text-align: left;">
+                        <p style="font-size: 13px; font-weight: 700; color: var(--text-dark); margin: 0;">นายวีรยุทธ
+                            รักชาติ</p>
+                        <p style="font-size: 11px; color: var(--text-gray); margin: 0;">User Account</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-down" style="font-size: 12px; color: var(--text-gray);"></i>
+                </button>
+
+                <!-- Dropdown Menu Content -->
+                <div id="userMenu"
+                    style="display: none; position: absolute; right: 0; top: 50px; background: white; min-width: 200px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1000; padding: 8px 0; overflow: hidden;">
+                    <a href="/user/user_profile.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-user-gear" style="color: var(--text-gray);"></i> Profile Settings
+                    </a>
+                    <a href="/user/user_notifications.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
+                        <i class="fa-solid fa-bell" style="color: var(--text-gray);"></i> Notifications
+                    </a>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 8px 0;">
+                    <a href="/login/login.html"
+                        style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--danger); font-size: 14px; font-weight: 700; transition: 0.2s;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <aside class="settings-sidebar">
+            <a href="/user/user_profile.html" class="menu-item active"><i class="fa-solid fa-user"></i> My Profile</a>
+            <a href="/user/user_teams.html" class="menu-item "><i class="fa-solid fa-users"></i> My Team</a>
+            <a href="/user/user_security.html" class="menu-item"><i class="fa-solid fa-lock"></i> Security</a>
+            <a href="/user/user_linked.html" class="menu-item "><i class="fa-solid fa-wallet"></i> Linked Accounts</a>
+            <hr style="margin: 15px 0; border: 0; border-top: 1px solid var(--border-color);">
+            <a href="#" class="menu-item" style="color: var(--danger);"><i class="fa-solid fa-trash"></i> Delete
+                Account</a>
+        </aside>
+
+        <main class="profile-card">
+            <h2 class="section-title">โปรไฟล์ผู้ใช้งาน</h2>
+
+            <form id="profileForm">
+                <!-- ส่วนอัปโหลดรูป -->
+                <div class="avatar-upload">
+                    <div class="avatar-preview">TV</div>
+                    <div>
+                        <h4 style="font-size: 16px; margin-bottom: 5px;">รูปประจำตัวของคุณ</h4>
+                        <p style="font-size: 12px; color: var(--text-gray); margin-bottom: 12px;">แนะนำขนาด 400x400px
+                            (JPG, PNG)</p>
+                        <button type="button" class="btn-upload"><i class="fa-solid fa-camera"></i> Change
+                            Photo</button>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <!-- ข้อมูลส่วนตัว -->
+                    <div class="form-group">
+                        <label>ชื่อ-นามสกุล (Full Name)</label>
+                        <input type="text" value="นายวีรยุทธ รักชาติ" placeholder="ชื่อจริงของคุณ">
+                    </div>
+                    <div class="form-group">
+                        <label>ชื่อผู้ใช้งาน (Display Name)</label>
+                        <input type="text" value="Weerayut R." placeholder="ชื่อที่แสดงในระบบ">
+                    </div>
+                    <div class="form-group">
+                        <label>อีเมล (Email)</label>
+                        <input type="email" value="weerayut@corp.com" readonly
+                            style="background: #f8fafc; cursor: not-allowed;">
+                    </div>
+                    <div class="form-group">
+                        <label>เบอร์โทรศัพท์ (Phone)</label>
+                        <input type="tel" value="081-234-5678" placeholder="08x-xxx-xxxx">
+                    </div>
+
+                    <!-- ข้อมูลวิชาชีพ/ทักษะ -->
+                    <div class="form-group">
+                        <label>ตำแหน่ง/อาชีพ (Position)</label>
+                        <select>
+                            <option selected>Project Owner</option>
+                            <option>Developer</option>
+                            <option>Entrepreneur</option>
+                            <option>Student</option>
+                            <option>Researcher</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>หน่วยงาน/สถานศึกษา (Organization)</label>
+                        <input type="text" value="Fatoni University" placeholder="ระบุชื่อองค์กร">
+                    </div>
+
+                    <div class="form-group full">
+                        <label>ประวัติโดยย่อ (Biography)</label>
+                        <textarea rows="4"
+                            placeholder="แนะนำตัวสั้นๆ เกี่ยวกับประสบการณ์หรือโครงการที่สนใจ...">ผู้เชี่ยวชาญด้านการพัฒนาระบบ ERP และการบริหารจัดการงบประมาณองค์กร สนใจการประยุกต์ใช้ IoT ในภาคการเกษตร</textarea>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 15px; margin-top: 20px;">
+                    <button type="button" onclick="history.back()"
+                        style="padding: 15px 30px; border-radius: 50px; border: 1px solid var(--border-color); background: white; font-weight: 700; cursor: pointer;">Cancel</button>
+                    <button type="submit" class="btn-save">Save Changes</button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <script>
+        document.getElementById('profileForm').onsubmit = function (e) {
+            e.preventDefault();
+            alert('บันทึกการเปลี่ยนแปลงโปรไฟล์เรียบร้อยแล้ว!');
+        }
+
+        
+        function toggleDropdown() {
+            const menu = document.getElementById('userMenu');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
+
+        // ปิด Dropdown เมื่อคลิกข้างนอก
+        window.onclick = function (event) {
+            if (!event.target.closest('.user-dropdown')) {
+                const dropdowns = document.getElementById("userMenu");
+                if (dropdowns) dropdowns.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>

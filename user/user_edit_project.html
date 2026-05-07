@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Project - iProject</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Prompt:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
@@ -20,52 +23,194 @@
             --warning-bg: #fff7ed;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif; background-color: var(--bg-soft); color: var(--text-dark); padding-bottom: 100px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 80px; background: white; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 24px; font-weight: 800; color: var(--text-dark); text-decoration: none; }
+        body {
+            font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif;
+            background-color: var(--bg-soft);
+            color: var(--text-dark);
+            padding-bottom: 100px;
+        }
 
-        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 80px;
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
 
         /* Alert Box จากสปอนเซอร์ */
         .revision-alert {
-            background: var(--warning-bg); border: 2px solid var(--warning); border-radius: 20px;
-            padding: 25px; margin-bottom: 35px; display: flex; gap: 20px; align-items: flex-start;
+            background: var(--warning-bg);
+            border: 2px solid var(--warning);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 35px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
         }
-        .revision-alert i { font-size: 24px; color: var(--warning); }
-        .revision-alert h2 { font-size: 18px; font-weight: 800; color: #9a3412; margin-bottom: 5px; }
+
+        .revision-alert i {
+            font-size: 24px;
+            color: var(--warning);
+        }
+
+        .revision-alert h2 {
+            font-size: 18px;
+            font-weight: 800;
+            color: #9a3412;
+            margin-bottom: 5px;
+        }
 
         /* Form Styling */
-        .form-card { background: white; border-radius: 24px; padding: 35px; border: 1px solid var(--border-color); margin-bottom: 25px; position: relative; }
-        .section-title { font-size: 18px; font-weight: 800; margin-bottom: 20px; color: var(--primary-blue); display: flex; align-items: center; gap: 10px; }
-        .section-title span { background: var(--accent-pink); width: 4px; height: 20px; border-radius: 10px; }
+        .form-card {
+            background: white;
+            border-radius: 24px;
+            padding: 35px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title span {
+            background: var(--accent-pink);
+            width: 4px;
+            height: 20px;
+            border-radius: 10px;
+        }
 
         /* Highlight สำหรับจุดที่ต้องแก้ */
-        .needs-revision { border: 2px solid var(--warning); box-shadow: 0 0 15px rgba(245, 158, 11, 0.1); }
-        .revision-badge {
-            position: absolute; top: -12px; right: 25px; background: var(--warning);
-            color: white; padding: 4px 15px; border-radius: 50px; font-size: 12px; font-weight: 800;
+        .needs-revision {
+            border: 2px solid var(--warning);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.1);
         }
-        .feedback-note { background: #fefce8; border-left: 4px solid var(--warning); padding: 12px; font-size: 13px; margin-top: 15px; color: #854d0e; font-style: italic; }
 
-        label { display: block; font-weight: 700; font-size: 14px; margin-bottom: 10px; }
-        input, textarea, select {
-            width: 100%; padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);
-            font-family: 'Prompt'; font-size: 14px; outline: none; transition: 0.3s;
+        .revision-badge {
+            position: absolute;
+            top: -12px;
+            right: 25px;
+            background: var(--warning);
+            color: white;
+            padding: 4px 15px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 800;
         }
-        input:focus, textarea:focus { border-color: var(--primary-blue); }
+
+        .feedback-note {
+            background: #fefce8;
+            border-left: 4px solid var(--warning);
+            padding: 12px;
+            font-size: 13px;
+            margin-top: 15px;
+            color: #854d0e;
+            font-style: italic;
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            font-family: 'Prompt';
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: var(--primary-blue);
+        }
 
         /* Footer Action Bar */
         .action-footer {
-            position: fixed; bottom: 0; left: 0; width: 100%; background: white;
-            padding: 20px 0; border-top: 1px solid var(--border-color); z-index: 100;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            padding: 20px 0;
+            border-top: 1px solid var(--border-color);
+            z-index: 100;
         }
-        .footer-container { max-width: 900px; margin: 0 auto; padding: 0 20px; display: flex; gap: 15px; }
-        .btn { flex: 1; padding: 16px; border-radius: 50px; font-weight: 800; font-size: 16px; cursor: pointer; transition: 0.3s; border: none; }
-        .btn-cancel { background: #f1f5f9; color: var(--text-gray); }
-        .btn-submit { background: var(--text-dark); color: white; }
-        .btn-submit:hover { background: var(--primary-blue); transform: translateY(-2px); }
+
+        .footer-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+        }
+
+        .btn-cancel {
+            background: #f1f5f9;
+            color: var(--text-gray);
+        }
+
+        .btn-submit {
+            background: var(--text-dark);
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+
         .user-dropdown a:hover {
             background-color: #f8fafc;
             color: var(--primary-blue) !important;
@@ -77,11 +222,12 @@
         }
     </style>
 </head>
+
 <body>
 
-     <nav>
+    <nav>
         <a href="/user/home.html" class="logo">iProject</a>
-         <div style="display:flex; align-items:center; gap:30px;">
+        <div style="display:flex; align-items:center; gap:30px;">
 
             <!-- User Dropdown -->
             <div class="user-dropdown" style="position: relative; display: inline-block;">
@@ -92,7 +238,8 @@
                         TV
                     </div>
                     <div style="text-align: left;">
-                        <p style="font-size: 13px; font-weight: 700; color: var(--text-dark); margin: 0;">นายวีรยุทธ รักชาติ</p>
+                        <p style="font-size: 13px; font-weight: 700; color: var(--text-dark); margin: 0;">นายวีรยุทธ
+                            รักชาติ</p>
                         <p style="font-size: 11px; color: var(--text-gray); margin: 0;">User Account</p>
                     </div>
                     <i class="fa-solid fa-chevron-down" style="font-size: 12px; color: var(--text-gray);"></i>
@@ -101,7 +248,7 @@
                 <!-- Dropdown Menu Content -->
                 <div id="userMenu"
                     style="display: none; position: absolute; right: 0; top: 50px; background: white; min-width: 200px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1000; padding: 8px 0; overflow: hidden;">
-                    <a href="#"
+                    <a href="/user/user_profile.html"
                         style="display: flex; align-items: center; gap: 10px; padding: 12px 20px; text-decoration: none; color: var(--text-dark); font-size: 14px; font-weight: 600; transition: 0.2s;">
                         <i class="fa-solid fa-user-gear" style="color: var(--text-gray);"></i> Profile Settings
                     </a>
@@ -125,7 +272,8 @@
             <i class="fa-solid fa-circle-exclamation"></i>
             <div>
                 <h2>สปอนเซอร์ขอให้แก้ไขข้อมูลโครงการ</h2>
-                <p style="font-size: 14px; color: #c2410c;">"งวดงานที่ 2 รายละเอียดกิจกรรมยังไม่ชัดเจน และงบประมาณในงวดที่ 3 สูงเกินไป รบกวนปรับปรุงข้อมูลเพื่อให้พิจารณาอีกครั้งครับ"</p>
+                <p style="font-size: 14px; color: #c2410c;">"งวดงานที่ 2 รายละเอียดกิจกรรมยังไม่ชัดเจน
+                    และงบประมาณในงวดที่ 3 สูงเกินไป รบกวนปรับปรุงข้อมูลเพื่อให้พิจารณาอีกครั้งครับ"</p>
             </div>
         </div>
 
@@ -135,7 +283,8 @@
                 <h2 class="section-title"><span></span>1. ข้อมูลโครงการหลัก</h2>
                 <div style="margin-bottom: 20px;">
                     <label>ชื่อโครงการ</label>
-                    <input type="text" value="Smart Agriculture IoT System" readonly style="background: #f8fafc; color: var(--text-gray);">
+                    <input type="text" value="Smart Agriculture IoT System" readonly
+                        style="background: #f8fafc; color: var(--text-gray);">
                 </div>
             </div>
 
@@ -143,7 +292,7 @@
             <div class="form-card needs-revision">
                 <span class="revision-badge"><i class="fa-solid fa-wrench"></i> ต้องได้รับการแก้ไข</span>
                 <h2 class="section-title"><span></span>2. กิจกรรมและแผนการดำเนินงาน (Tasks)</h2>
-                
+
                 <div style="margin-bottom: 20px;">
                     <label>กิจกรรมงวดที่ 2</label>
                     <textarea rows="4">พัฒนาซอฟต์แวร์และระบบ Dashboard</textarea>
@@ -157,21 +306,23 @@
             <div class="form-card needs-revision">
                 <span class="revision-badge"><i class="fa-solid fa-wrench"></i> ต้องได้รับการแก้ไข</span>
                 <h2 class="section-title"><span></span>3. แผนการใช้จ่ายงบประมาณ</h2>
-                
+
                 <div style="margin-bottom: 20px;">
                     <label>งบประมาณรวม (บาท)</label>
                     <input type="number" value="185000">
                 </div>
 
                 <div class="feedback-note">
-                    <b>Feedback:</b> "งบประมาณในงวดที่ 3 (ค่าติดตั้งหน้างาน) จำนวน ฿ 55,000 ดูสูงเกินไปเมื่อเทียบกับอุปกรณ์ รบกวนแจกแจงรายละเอียดค่าแรงและค่าวัสดุเพิ่มครับ"
+                    <b>Feedback:</b> "งบประมาณในงวดที่ 3 (ค่าติดตั้งหน้างาน) จำนวน ฿ 55,000
+                    ดูสูงเกินไปเมื่อเทียบกับอุปกรณ์ รบกวนแจกแจงรายละเอียดค่าแรงและค่าวัสดุเพิ่มครับ"
                 </div>
             </div>
 
             <!-- ส่วนเอกสารแนบ -->
             <div class="form-card">
                 <h2 class="section-title"><span></span>4. เอกสารเพิ่มเติม</h2>
-                <p style="font-size: 13px; color: var(--text-gray); margin-bottom: 15px;">อัปโหลดเอกสารหรือรูปภาพตามที่สปอนเซอร์ร้องขอ</p>
+                <p style="font-size: 13px; color: var(--text-gray); margin-bottom: 15px;">
+                    อัปโหลดเอกสารหรือรูปภาพตามที่สปอนเซอร์ร้องขอ</p>
                 <input type="file" style="padding: 10px; border: 2px dashed var(--border-color); background: #fafafa;">
             </div>
         </form>
@@ -181,7 +332,9 @@
     <div class="action-footer">
         <div class="footer-container">
             <button class="btn btn-cancel" onclick="history.back()">ยกเลิก</button>
-            <button class="btn btn-submit" onclick="alert('บันทึกการแก้ไขและส่งให้สปอนเซอร์ตรวจอีกครั้งแล้ว!'); location.href='/user/my_projects.html'">บันทึกการแก้ไขและส่งใหม่ (Resubmit)</button>
+            <button class="btn btn-submit"
+                onclick="alert('บันทึกการแก้ไขและส่งให้สปอนเซอร์ตรวจอีกครั้งแล้ว!'); location.href='/user/my_projects.html'">บันทึกการแก้ไขและส่งใหม่
+                (Resubmit)</button>
         </div>
     </div>
 
@@ -204,4 +357,5 @@
         }
     </script>
 </body>
+
 </html>
